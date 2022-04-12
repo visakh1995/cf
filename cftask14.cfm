@@ -1,49 +1,50 @@
-<cfif structKeyExists(form,'Submit') and len(trim(form.image))>
+<cfif structKeyExists(form,'Submit')>
     <cfset thisDir = expandPath(".\uploads\")>
     <cfset name = form.name>
     <cfset description = form.description>
     <cfset image = form.image>
     <cfset imageArray = arrayNew(1)>
-    <cfset fileSizeLimit = 60000 />
 
-        <cfif cgi.content_length LTE fileSizeLimit>
-            <cffile action="upload"
-            fileField="image"
-            accept="image/png, image/gif, image/jpeg" 
-            nameconflict="overwrite"
-            result = "fileupload"
-            allowedExtensions =".png,.jpeg"
-            destination="#thisDir#">
-                <cfif fileUpload.fileWasSaved>
-                        <!---<cfif isImageFile("#fileupload.serverfile#")> --->
-                        <cfimage action="read" source = "./uploads/#fileUpload.serverfile#"
-                        name = "myImage">
-                            <cfset ImageScaleToFit(myImage,75,75,"bilinear")>
-                            <cfset newImageName = fileUpload.serverDirectory & "/" &
-                            fileUpload.serverFilename & "_thumbnail." &
-                            fileUpload.serverFileExt>
-                            <cfimage source ="#myImage#" action="write"
-                            destination = "#newImageName#" overwrite ="yes">
-                            <cfset arrayAppend(imageArray, "created a new thumbnail image")>
+    <cfif len(trim(form.image))>
+        <cffile action="upload" fileField="image"
+        nameconflict="overwrite" result = "fileupload"
+        destination="#thisDir#">
 
+        <cfif fileUpload.fileWasSaved>
+            <cfset path = fileupload.serverdirectory & "\" & fileupload.serverfile>
+            <cfif NOT isImageFile(path)> 
+                <cfset errors = "Invalid Image!<br />"> 
+                <cffile action="delete" file="#path#">
+            <cfelseif fileupload.filesize gt 1000000>
+                <cfoutput>
+                    <cfset arrayAppend(imageArray, "File size is greater tah 1 mb,please try again")>
+                </cfoutput>
+            <cfelse>
+                <cfimage action="read" source = "./uploads/#fileUpload.serverfile#" name = "myImage">
+                <cfset ImageScaleToFit(myImage,75,75,"bilinear")>
+                <cfset newImageName = fileUpload.serverDirectory & "/" &
+                fileUpload.serverFilename & "_thumbnail." &
+                fileUpload.serverFileExt>
 
-                            <cfinvoke component="components.userDefined" 
-                            method="createImageUpload" returnVariable="insertedData" 
-                            argumentCollection="#Form#"> 
-                            <cfinvokeargument  name="imageName"  value=" #fileUpload.serverFilename & "_thumbnail."&
-                            fileUpload.serverFileExt#">
-                            </cfinvoke>
-
-
-                            <!---</cfif> --->
-                </cfif>
-        <cfelse>
-        <cfset arrayAppend(imageArray, "large image or wrong format,cant upload,please try again")>
+                <cfimage source ="#myImage#" action="write"
+                destination = "#newImageName#" overwrite ="yes">
+                <cfset arrayAppend(imageArray, "created a new thumbnail image")>
+                <cfoutput>
+                    <div class='d-flex flex-column justify-content-center align-items-center'>
+                    <p class=' text-success font-weight-bold'>
+                    File Uploaded and thumbnail created!!
+                    <p>
+                    <cfimage source="#newImageName#" action="writeToBrowser">
+                    </div>
+                </cfoutput>
+                <cfinvoke component="components.userDefined" 
+                method="createImageUpload" returnVariable="insertedData" 
+                argumentCollection="#Form#"> 
+                        <cfinvokeargument  name="imageName" value=" #fileupload.serverfile#">
+                </cfinvoke>
+            </cfif>           
         </cfif>
-        
-
-
-
+    </cfif>
 </cfif>
 
 <html>
@@ -60,7 +61,7 @@
         <section>
             <div class="main-container">
                 <div class="card">
-                    <h3 class="heading">CF TASK 14 FORM</h3>
+                    <h3 class="heading">CF Task 14 - Form</h3>
                     <cfif isDefined("imageArray") AND NOT arrayIsEmpty(imageArray)>
                         <cfloop array = #imageArray# index = "value">
                             <div class="alert">
@@ -81,7 +82,7 @@
                         </div>
                         <div class="form-control">
                             <cfinput type="file" placeholder="Upload Image"
-                             name="image">
+                             name="image" accept =" .jpg,.png,.gif">
                         </div>
                         <cfoutput>
 <!---                             <cfset theDir=GetDirectoryFromPath(GetCurrentTemplatePath())> --->
@@ -91,10 +92,8 @@
 <!---                             </cfif> --->
 
                         </cfoutput>
-
-
                         <div class="form-btn">
-                            <cfinput type="submit" class="btn" value = "Send Image" 
+                            <cfinput type="submit" class="btn" value = "Submit" 
                             name="Submit">
                         <div>
                     </cfform>

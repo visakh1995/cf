@@ -18,8 +18,8 @@ cellspacing="8" style="border: 1px solid black">
         <td>#id#</td>
         <td>#name#</td>
         <td>#description#</td>
-        <td>
-        <img src="uploads/#getFileFromPath(image)#"> 
+        <td><a href="cftask14show.cfm?imgID=#id#">
+        <img src="uploads/#getFileFromPath(image)#"></a>
         </td>
 
     </tr>
