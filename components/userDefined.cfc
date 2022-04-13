@@ -36,29 +36,43 @@
 
     <cffunction name ="multipleValueCalcCreateObject">
         <cfset argCount = ArrayLen(Arguments)> 
-<!---         <cfdump  var = #argCount#>  --->
         <cfset multipleValue = 1> 
         <cfloop from ="1" to = "#argCount#" index="i" step="1">
             <cfset multipleValue = multipleValue * Arguments[i] >
           </cfloop>
         <cfreturn multipleValue>
     </cffunction>
+
     <cffunction name="print" access="public" >
         <cfset var i =1>
         <cfset var j =3>
         <cfset var n =3>
         <cfloop from="1" to="3" index="i">              
-                      <cfset var k =#i#>
-                            <cfloop from="1" to="3" index="j">
-                                          <cfoutput>#k# &nbsp;</cfoutput>
-                                        <cfset  k= (#k# + #n# )>
-                            </cfloop>                   
-                      <cfoutput> <br>
-                      </cfoutput>
+        <cfset var k =#i#>
+            <cfloop from="1" to="3" index="j">
+            <cfoutput>#k# &nbsp;</cfoutput>
+            <cfset  k= (#k# + #n# )>
+            </cfloop>                   
+            <cfoutput> <br>
+        </cfoutput>
         </cfloop>
       </cffunction>
-      
 
-    
+    <cffunction name="makeRandomString" returnType="string" output="false">
+        <cfset var chars = "23456789ABCDEFGHJKMNPQRS">
+        <cfset var length = randRange(4,7)>
+        <cfset var result = "">
+        <cfset var i = "">
+        <cfset var char = "">
+        
+        <cfscript>
+        for(i=1; i <= length; i++) {
+            char = mid(chars, randRange(1, len(chars)),1);
+            result&=char;
+        }
+        </cfscript>
+        <cfreturn result>
+    </cffunction>
+      
 </cfcomponent>
 

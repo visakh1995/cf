@@ -62,12 +62,16 @@
         </section>
     </body>
     <script>
-    function showErrorMessage(form, ctrl, value, message) {
-     document.getElementById("alert").innerHTML ="Please enter Numeric value";
-    // alert("The value " + value +" of the " + ctrl + " field " + message);
+    function showErrorMessage() {
+        var value = document.getElementById("enteredValue").value;
+        if(isNaN(value)){
+            document.getElementById("alert").innerHTML ="Please enter Numeric value";
+        }else{
+            retrun;
+            document.getElementById("alert").innerHTML ="okay";
+        }
     }
     </script>
    
-
     
 </html>
