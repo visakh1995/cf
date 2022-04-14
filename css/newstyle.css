@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+*{
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+}
+.main-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(102, 153, 0);
+    height:2000px;
+}
+.containWrapper{
+    margin-top: 400px;
+}
+.card{
+    border : 1px solid grey;
+    padding: 30px;
+    margin:10px;
+    height:1300px;
+    width:700px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.card1{
+    border : 1px solid grey;
+    padding: 30px;
+    margin:10px;
+    height:500px;
+    width:350px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.heading {
+   text-align:left;
+   padding:30px;
+   background-color: rgb(120, 153, 0);
+   color:#fff;
+   text-shadow: 0px 1px, 1px 0px, 1px 1px;
+   letter-spacing:1px;
+   font-weight:bold;
+}
+.heading-two{
+    padding:20px;
+}
+.heading-two-para{
+    padding:5px;
+    font-size: small;
+}
+.heading-paras{
+    font-size: 12px;
+}
+.form-control {
+   text-align: center;
+}
+.date-label{
+    text-align: left;
+    font-size: small;
+    font-weight: 600;
+}
+.label{
+    text-align: left;
+    font-weight: 600;
+}
+input[type="number"],[type="text"],[type="date"],[type="textarea"],[type="email"]{
+    border:none;
+    padding:3px;
+    border-bottom: 1px solid grey;
+    font-size:15px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 50px;
+}
+
+input:focus{
+    outline:none;
+    background-color: #fff;
+}
+.btn{
+    padding:5px 15px;
+    border:none;
+    border-radius: 5px;
+    color:#fff;
+    background-color: #047ade;
+    text-align: center;
+}
+.alert{
+    background-color: rgb(224, 17, 34);
+    text-align: center;
+    color:#fff;
+    padding:5px;
+    font-size: 13px;
+    border-radius: 5px;
+}
+.fullWidth{
+    border:none;
+    padding:3px;
+    border-bottom: 1px solid grey;
+    font-size:15px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 50px;
+    }
+.fullWidth:focus{
+    outline:none;
+    }
+
+.checkboxed {
+    display: flex;
+    justify-content: flex-start;
+}
+.checkbox2{
+    padding:10px;
+}
+.file-label{
+    display: flex;
+    justify-content: flex-start;
+}

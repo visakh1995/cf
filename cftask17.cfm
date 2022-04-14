@@ -67,7 +67,7 @@
         if(isNaN(value)){
             document.getElementById("alert").innerHTML ="Please enter Numeric value";
         }else{
-            retrun;
+            return;
             document.getElementById("alert").innerHTML ="okay";
         }
     }

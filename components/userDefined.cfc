@@ -73,6 +73,28 @@
         </cfscript>
         <cfreturn result>
     </cffunction>
+
+    <cffunction name="createFormDetails">
+         <cfset imageValue = #cffile.serverFile#> 
+        <cfquery name="addData" result = result  datasource="cruddb">
+            INSERT INTO coldfusiion.form_info (position,relocate,startDate,website,resumePath,salary,firstName,
+            lastName,email,phone)
+            VALUES(
+                <cfqueryparam value="#form.position#">,
+                <cfqueryparam value="#form.checks#">,
+                <cfqueryparam value ="#form.startDate#">,
+                <cfqueryparam value="#form.websiteName#">,
+                <cfqueryparam value="#imageValue#">,
+                <cfqueryparam value ="#form.salary#">,
+                <cfqueryparam value="#form.firstName#">,
+                <cfqueryparam value="#form.lastName#">,
+                <cfqueryparam value ="#form.email#">,
+                <cfqueryparam value ="#form.phone#">            
+                )
+        </cfquery>
+        <cflocation url="./cftask23.cfm" > 
+    </cffunction>
       
+    
 </cfcomponent>
 
