@@ -1,0 +1,1 @@
+<h1>Email varified,data submitted successfully...</h1>

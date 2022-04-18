@@ -96,6 +96,13 @@ input:focus{
     font-size: 13px;
     border-radius: 5px;
 }
+.alerts{
+    text-align: center;
+    color:red;
+    padding:5px;
+    font-size: 13px;
+    border-radius: 5px;
+}
 .fullWidth{
     border:none;
     padding:3px;

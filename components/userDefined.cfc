@@ -94,6 +94,25 @@
         </cfquery>
         <cflocation url="./cftask23.cfm" > 
     </cffunction>
+
+    <cffunction name="getUserByEmail" access="remote"
+    returnFormat = "json" output="false">
+        <cfargument name="userEmail" type="string" required="false"> 
+        <cfquery name="emailVerify" datasource="cruddb">
+            SELECT *FROM coldfusiion.verify_table WHERE email = "#userEmail#";
+        </cfquery>
+        <cfreturn emailVerify.RecordCount>
+    </cffunction>
+
+    <cffunction name="insertVerifiedEmailData">
+        <cfquery name="insertValues" datasource="cruddb">
+            INSERT INTO coldfusiion.verify_table (fullName,email) VALUES(
+                <cfqueryparam value ="#form.name#">,
+                <cfqueryparam value="#form.email#">
+            )
+        </cfquery>
+        <cflocation url="./cftask24results.cfm" > 
+    </cffunction>
       
     
 </cfcomponent>

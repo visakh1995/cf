@@ -1,9 +1,17 @@
-
 <html>
     <head>
         <link rel="stylesheet" href="css/newstyle.css" type="text/css">
         <title>CF TASKS</title>
     </head>
+    <style>
+        .alerts{
+            background-color:red;
+            text-align: center;
+            color:#fff;
+            font-size: 13px;
+            border-radius: 5px;
+        }
+    </style>
     <body>
         <section>
             <div class="main-container">
@@ -15,7 +23,7 @@
                         <h2>Employment Application</h2>
                         <p class="heading-two-para">Infinity Box Inc</p>
                         </div>
-                        <div class="alert" id="alert"></div>
+                        <div class="alerts" id="alert"></div>
                         <cfform name="myForm" enctype="multipart/form-data" action="cftask23action.cfm" method = "post">
                             <div class="form-control">
                                 <cfselect  
@@ -32,10 +40,10 @@
                             <div class="form-control">
                                 <p class="label">Are you willing relocate ?</p><br>
                                 <div class="checkboxed">
-                                <cfinput class="checkbox1" type="checkbox"
+                                <cfinput class="checkbox1" type="radio"
                                 name="checks" id="yes"
                                 value="1">Yes
-                                <cfinput class="checkbox2" type="checkbox"
+                                <cfinput class="checkbox2" type="radio"
                                 name="checks" id="no"
                                 value="0">No
                                 </div>
@@ -102,7 +110,7 @@
                 var cbox = document.forms["myForm"]["checks"];
 
                 if(position == ""){
-                    document.getElementById("alert").innerHTML ="please select the position you are looking for";
+                    document.getElementById("alert").innerHTML ="Please select the position you are looking for";
                     return false;
                 }
                 if(cbox[0].checked == false &&cbox[1].checked == false) {

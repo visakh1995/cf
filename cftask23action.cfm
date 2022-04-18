@@ -2,6 +2,7 @@
     <cfif len(trim(form.resume))> 
         <cffile action="upload"
         fileField="resume"
+        nameconflict="overwrite"
         destination="C:\coldFusion2021\cfusion\wwwroot\test\uploads\">
         <p>Thankyou, your file has been uploaded.</p>
 
