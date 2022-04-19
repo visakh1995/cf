@@ -113,7 +113,30 @@
         </cfquery>
         <cflocation url="./cftask24results.cfm" > 
     </cffunction>
+
+    <cffunction name="verifyCredentials">
+        <cfargument name="username" type="string">
+        <cfargument name="password" type="string">
+            <cfquery name="verifiedDetails" datasource="cruddb">
+                SELECT *FROM coldfusiion.login_table WHERE userName = "#username#" AND 
+                password = "#password#"
+            </cfquery>
+        <cfif verifiedDetails.RecordCount gt 0>
+                <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 0, 60)#"
+                sessionManagement="yes">
+                <cfif NOT structKeyExists(Session, "adminCredentials")>
+                    <cflock  timeout="20" scope="Session" type="Exclusive">
+                        <cfset Session.adminCredentials = structNew()>
+                    </cflock>
+                </cfif>
+                <cfif structKeyExists(Session,"adminCredentials")>
+                    <cfset Session.adminCredentials["userName"] = "#verifiedDetails.userName#">
+                    <cfset Session.adminCredentials["password"] = "#verifiedDetails.password#">
+                    <cfset Session.adminCredentials["isAuthenticated"] = "True">
+                </cfif>
+        </cfif>
+        <cfreturn verifiedDetails.RecordCount>
+    </cffunction>
       
-    
 </cfcomponent>
 
