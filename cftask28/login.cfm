@@ -19,19 +19,22 @@
                     
                         <cfobject component ="CF_TASK.components.userDefined" name="redirectObject">
                         <cfinvoke component="#redirectObject#"
-                        method="verifyCredentials" returnVariable="verfiedResults">
+                        method="CMSverifyCredentials" returnVariable="verfiedResults">
                         <cfinvokeargument  name="username"  value="#Username#"> 
-                        <cfinvokeargument  name="password"  value="#encodedPassword#"> 
+                        <cfinvokeargument  name="password"  value="#Password#"> 
                         </cfinvoke>
 
                         <cfif verfiedResults != 0>
-                        <cflocation  url="./welcomePage.cfm"> 
+                            <cfif isUserInRole("1") OR isUserInRole("2") OR isUserInRole("3")>
+                                <cflocation  url="./welcomePage.cfm">                  
+                            </cfif>
                         <cfelse>
-                            <cfset arrayAppend(errorShower, "Invalid login credentials,please try again")>
-                        </cfif>
+                            <cfset arrayAppend(errorShower, "Invalid login credentials,please try again")> 
+                        </cfif>   
+
                     </cfif>
 
-                    <cfform name="cftask_1" action="">
+                    <cfform name="cftask_1" action="#CGI.script_name#?#CGI.query_string#">
                         <cfif isDefined("errorShower") AND NOT arrayIsEmpty(errorShower)>
                             <div class="alert">
                                 <cfoutput>

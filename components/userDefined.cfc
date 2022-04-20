@@ -137,6 +137,88 @@
         </cfif>
         <cfreturn verifiedDetails.RecordCount>
     </cffunction>
-      
+    <!--- cms start here     --->
+    <cffunction name="CMSverifyCredentials">
+        <cfargument name="username" type="string">
+        <cfargument name="password" type="string">
+            <cfquery name="verifiedCMSDetails" datasource="cruddb">
+                SELECT *FROM coldfusiion.cms_user WHERE userName = "#username#" AND 
+                password = "#password#"
+            </cfquery>
+        <cfif verifiedCMSDetails.RecordCount gt 0>
+            <cflogin>
+                <cfloginuser  name="#verifiedCMSDetails.userName#" 
+                roles="#verifiedCMSDetails.role#"
+                password="#verifiedCMSDetails.password#">
+            </cflogin>
+                <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 0, 60)#"
+                sessionManagement="yes">
+                <cfif NOT structKeyExists(Session, "Credentials")>
+                    <cflock  timeout="20" scope="Session" type="Exclusive">
+                        <cfset Session.Credentials = structNew()>
+                    </cflock>
+                </cfif>
+                <cfif structKeyExists(Session,"Credentials")>
+                    <cfset Session.Credentials["userName"] = "#verifiedCMSDetails.userName#">
+                    <cfset Session.Credentials["password"] = "#verifiedCMSDetails.password#">
+                    <cfset Session.Credentials["role"] = "#verifiedCMSDetails.role#">
+                    <cfset Session.Credentials["isAuthenticated"] = "True">
+                </cfif>
+        </cfif>
+        <cfreturn verifiedCMSDetails.RecordCount>
+    </cffunction>
+    <cffunction name="retrievePages">
+        <cfquery name="showPagesRetrieves" datasource="cruddb">
+            SELECT * FROM coldfusiion.cms_page
+        </cfquery>
+         <cfreturn showPagesRetrieves>
+    </cffunction>
+    <cffunction name="deleteCmsPageDetails">
+        <cfargument name="deleteId" required="yes">
+        <cfquery name="deleteData" datasource="cruddb">
+            DELETE FROM coldfusiion.cms_page WHERE pageId = "#deleteId#"
+        </cfquery>
+        <cflocation  url="./welcomePage.cfm">
+    </cffunction>
+    <cffunction name="createPageDetails">
+        <cfquery name="addData" result = result  datasource="cruddb">
+            INSERT INTO coldfusiion.cms_page (pageName,pageDescription)
+            VALUES(
+            <cfqueryparam value="#form.pageName#">,
+            <cfqueryparam value="#form.pageDescription#">
+             )
+            </cfquery>
+        <cflocation url="./welcomePage.cfm" > 
+    </cffunction>
+    <cffunction name="editCmsDetails">
+        <cfargument name ="editId" type="string" required="yes">
+        <cfquery name="editData" datasource="cruddb">
+            SELECT * FROM coldfusiion.cms_page WHERE pageId = "#editId#"
+        </cfquery>
+        <cfreturn editData>
+        <cfdump var=#editData#>
+    </cffunction>
+    <cffunction name="updatePageDetails">
+        <cfquery name="updateData" datasource="cruddb">
+           UPDATE coldfusiion.cms_page SET 
+           pageName = <cfqueryparam  value="#arguments.pageName#">,
+           pageDescription  = <cfqueryparam  value="#arguments.pageDescription#">
+           WHERE pageId = "#arguments.pageId#"
+        </cfquery>
+        <cflocation url="./welcomePage.cfm" >
+    </cffunction>
+    <cffunction name="pageCmsDetailsInfo">
+        <cfargument name ="detailId" type="string" required="yes">
+        <cfquery name="infoData" datasource="cruddb">
+            SELECT * FROM coldfusiion.cms_page WHERE pageId = "#detailId#"
+        </cfquery>
+        <cfreturn infoData>
+        <cfdump var=#editData#>
+    </cffunction>
+    
+
+
+
+
 </cfcomponent>
 
