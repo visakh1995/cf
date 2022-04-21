@@ -215,10 +215,13 @@
         <cfreturn infoData>
         <cfdump var=#editData#>
     </cffunction>
-    
-
-
-
-
+    <cffunction name="structTextRetriever">
+        <cfargument  name="description" type="string" required="yes">
+        <cfset mySentence = structNew()>
+        <cfset insertions =StructInsert(mySentence,"sentence","#description#")>
+        <cfdump var =#insertions#>
+    <cfreturn mySentence>
+    </cffunction>
+ 
 </cfcomponent>
 
