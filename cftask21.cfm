@@ -7,7 +7,7 @@
     <body>
         <section>
             <div class="main-container">
-                <div class="card">
+                <div class="card1">
                     <h3 class="heading">CF TASK 21</h3>
                     <cfif structKeyExists(form,'Submit')>
                         <cfset thisDir = expandPath(".\uploads\")>
@@ -22,33 +22,44 @@
                             nameconflict="overwrite" result = "fileupload"
                             destination="#thisDir#">
                             <cfif fileUpload.fileWasSaved>
-                                <p>uploaded successfully, mail function goes here</p>
+                                <cfset arrayAppend(imageArray, "file uploaded")>
                                 <cfmail
                                 from="Sender@Company.com"
                                 to="#email#"
-                                subject="Sample e-mail from ColdFusion">
-                                This is a sample e-mail message to show basic e-mail capability.
+                                subject="#description#"
+                                type="html">
+                                <!---<p><img src="#thisDir#/#image# width="350" height="261" alt="" /><br /></p> --->
                                 </cfmail>
+                                <cfset arrayAppend(imageArray, "& mail forwarded successfully")>
                             </cfif>
                         </cfif>
                     </cfif>
                     <cfform name="cftask_1" enctype="multipart/form-data" action="">
+                        <cfif isDefined('imageArray') AND NOT arrayIsEmpty(imageArray)>
+                            <div class="alert">
+                                <cfoutput>
+                                    <cfloop array = #imageArray# index = "Detail">
+                                        <p>#Detail#</p>
+                                    </cfloop>
+                                </cfoutput>
+                            </div>
+                        </cfif>
                         <div class="form-control">
                             <cfinput type="text" placeholder="Enter the baby name"
-                             name="babyName" message="Please enter number between 1 and 5">
+                             name="babyName">
                         </div>
                         <div class="form-control">
-                            <cfinput type="text" placeholder="Enter the email "
+                            <cfinput type="email" placeholder="Enter the email "
                              name="email">
-                        </div>
-                        <div class="form-controls">
-                            <cftextarea rows="5" cols="39" class="texts" 
-                            name="description"  placeholder="Birthday Wishes"/>
-                        </div>
+                        </div><br><br><br>
+                        <div class="form-control">
+                            <cftextarea rows="5" cols="37" class="texts" 
+                            name="description"  placeholder="Birthday Wish here"/>
+                        </div><br><br>
                         <div class="form-control">
                             <cfinput type="file" placeholder="Greetings Image"
                              name="image" accept =" .jpg,.png,.gif">
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>
@@ -57,4 +68,5 @@
             </div>
         </section>
     </body>
+
 </html>

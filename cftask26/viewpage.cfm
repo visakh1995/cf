@@ -1,13 +1,13 @@
 
 <cfobject component ="CF_TASK.components.newdefined" name="redirectObject">
 <cfinvoke component="#redirectObject#"
-    method="sortedList" returnVariable="page">
+    method="sortedListFile" returnVariable="page">
 </cfinvoke>
 
 <cfparam  name="desc">
 
 <cfinvoke component="#redirectObject#"
-method="structTextRetriever" returnVariable="structData">
+method="structTextRetrieverFile" returnVariable="structData">
 <cfinvokeargument  name="description"  value="#desc#"> 
 </cfinvoke>
 

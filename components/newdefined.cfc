@@ -16,9 +16,15 @@
      <cfreturn mySentence>
     </cffunction> 
     <cffunction name="sortedList">
-        <cfquery name="getInfos" datasource="cruddb">
+        <cfquery name="page" datasource="cruddb">
             SELECT *FROM coldfusiion.words_table ORDER BY sentence DESC
         </cfquery>
-        <cfreturn getInfos>
+        <cfreturn page>
+    </cffunction>
+    <cffunction name="sortedListFile">
+        <cfquery name="page" datasource="cruddb">
+            SELECT *FROM coldfusiion.read_count ORDER BY sentence DESC
+        </cfquery>
+        <cfreturn page>
     </cffunction>
 </cfcomponent>

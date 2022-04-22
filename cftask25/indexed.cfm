@@ -17,6 +17,7 @@
                         </cfinvoke>
                         <cfdump var =#structResults#>
                         <cfset data = structKeyList(structResults)>
+                        <cfdump var=#data#>
                         <cfloop list= #data# index="i">
                             <cfquery name = "insertWords" datasource="cruddb">
                                 INSERT INTO coldfusiion.words_table(sentence)
