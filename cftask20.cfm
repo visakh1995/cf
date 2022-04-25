@@ -54,7 +54,7 @@
                              name ="enteredValue"><br><br><br>
                              <cfinput type="hidden" name ="captchaHashed" value="#captchaHash#">
                              <cfimage action="captcha" width="300" height="75" text="#captcha#">
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

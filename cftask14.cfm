@@ -75,23 +75,17 @@
                         <div class="form-control">
                             <cfinput type="text" placeholder="Image Name"
                              name="name">
-                        </div>
+                        </div><br>
                         <div class="form-controls">
                             <cftextarea rows="5" cols="5" class="texts" 
                             name="description"  placeholder="description"/>
-                        </div>
+                        </div><br>
                         <div class="form-control">
                             <cfinput type="file" placeholder="Upload Image"
                              name="image" accept =" .jpg,.png,.gif">
                         </div>
                         <cfoutput>
-<!---                             <cfset theDir=GetDirectoryFromPath(GetCurrentTemplatePath())> --->
-<!---                             <cfset theFile=theDir & "uploads/#getFileFromPath(newImageName)#"> --->
-<!---                             <cfif  FileExists(theFile)> --->
-<!---                                <img src="uploads/#getFileFromPath(newImageName)#"> --->
-<!---                             </cfif> --->
-
-                        </cfoutput>
+                        </cfoutput><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" value = "Submit" 
                             name="Submit">

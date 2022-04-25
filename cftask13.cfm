@@ -21,7 +21,7 @@
                     <h3 class="heading">CF TASK 13 STRING</h3>
                     <cfif isDefined("arrayAlert") AND NOT arrayIsEmpty(arrayAlert)>
                         <cfloop array = #arrayAlert# index = "value">
-                            <div class="alert">
+                            <div class="alert-green">
                                 <cfoutput>
                                     <p>#value#<p>
                                 </cfoutput>
@@ -32,7 +32,7 @@
                         <div class="form-control">
                             <cfinput type="text" placeholder="Enter the string"
                              name="stringValue">
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

@@ -17,13 +17,13 @@
     </cffunction> 
     <cffunction name="sortedList">
         <cfquery name="page" datasource="cruddb">
-            SELECT *FROM coldfusiion.words_table ORDER BY sentence DESC
+            SELECT *FROM coldfusiion.words_table 
         </cfquery>
         <cfreturn page>
     </cffunction>
     <cffunction name="sortedListFile">
         <cfquery name="page" datasource="cruddb">
-            SELECT *FROM coldfusiion.read_count ORDER BY sentence DESC
+            SELECT *FROM coldfusiion.read_count 
         </cfquery>
         <cfreturn page>
     </cffunction>

@@ -13,7 +13,6 @@
     <cfset arrayAppend(arrayShown,"Last Name of #rowNumber# is #que.lastName#")>
 
      </cfif>
-
 </cfif>
 
 <html>
@@ -52,7 +51,7 @@
                         <div class="form-control">
                             <cfinput type="number" placeholder="Enter the number"
                              name="rowNumber">
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

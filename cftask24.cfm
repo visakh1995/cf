@@ -8,9 +8,7 @@
         crossorigin="anonymous"></script>
         <title>CF TASKS</title>
     </head>
-
     <body>
-
         <section>
             <div class="main-container">
                 <div class="card">

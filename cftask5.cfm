@@ -28,7 +28,7 @@
                 <div class="card1">
                     <h3 class="heading">CF TASK 5 AGE</h3>
                     <cfif isDefined('dateDetails') AND NOT arrayIsEmpty(dateDetails)>
-                        <div class="alert">
+                        <div class="alert-green">
                             <cfoutput>
                                 <cfloop array = #dateDetails# index = "dateDetail">
                                     <p>#dateDetail#</p>
@@ -40,13 +40,13 @@
                         <div class="form-controls">
                             <cfinput type="date" placeholder="Date of birth of mother"
                              name="mDob">
-                             <span><p>Date of birth of mother</p></span>
+                             <span><p class="date-label">Date of birth of mother</p></span>
                         </div>
                         <div class="form-controls">
                             <cfinput type="date" placeholder="Date of birth of user"
                              name="uDob">
-                             <p>Date of birth of user</p>
-                        </div>
+                             <p class="date-label">Date of birth of user</p>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

@@ -4,39 +4,18 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <title>CF TASKS</title>
     </head>
-    <style>
-    #alert{
-        background-color: red;
-        border-radius:5px;
-        color:#fff;
-        font-size:16px;
-        text-align:center;
-        font-weight:900;
-    }
-    .odd{
-        font-size:20px;
-        color:darkblue;
-        font-weight:bold;
-    }
-    .even{
-        font-size:20px;
-        color:darkgreen;
-        font-weight:bold;
-    }
-    </style>
     <body>
         <section>
             <div class="main-container">
                 <div class="card">
-                    <h3 class="heading">CF TASK 17-</h3>
-
+                    <h3 class="heading">CF TASK 17</h3>
                     <cfform name="myForm" action="">
                         <div id="alert"></div>
                         <div class="form-control">
                             <cfinput type="text" id = "enteredValue" placeholder="Please enter numeric value"
                              name="number" validate="numeric" message="Please enter numeric value"
                              onError="showErrorMessage">
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit" >
                         <div>

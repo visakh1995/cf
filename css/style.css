@@ -66,6 +66,14 @@ input:focus{
     margin-left: 110px;
 }
 .alert{
+    background-color: red;
+    text-align: center;
+    color:#fff;
+    padding:5px;
+    font-size: 13px;
+    border-radius: 5px;
+}
+.alert-green{
     background-color: green;
     text-align: center;
     color:#fff;
@@ -87,4 +95,27 @@ input:focus{
     color:#047ade;
     font-size :25px;
     margin-top:160px;
+}
+.date-label{
+    text-align: left;
+    font-size: small;
+    font-weight: 600;
+}
+#alert{
+    background-color: red;
+    border-radius:5px;
+    color:#fff;
+    font-size:16px;
+    text-align:center;
+    font-weight:900;
+}
+.odd{
+    font-size:20px;
+    color:darkblue;
+    font-weight:bold;
+}
+.even{
+    font-size:20px;
+    color:darkgreen;
+    font-weight:bold;
 }

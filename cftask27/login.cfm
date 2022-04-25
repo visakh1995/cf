@@ -20,7 +20,7 @@
                         <cfinvoke component="#redirectObject#"
                         method="verifyCredentials" returnVariable="verfiedResults">
                         <cfinvokeargument  name="username"  value="#Username#"> 
-                        <cfinvokeargument  name="password"  value="#encodedPassword#"> 
+                        <cfinvokeargument  name="password"  value="#Password#"> 
                         </cfinvoke>
 
                         <cfif verfiedResults != 0>

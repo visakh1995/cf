@@ -19,12 +19,12 @@
                     <cfform name="cftask_1" action="">
                         <div class="form-control">
                             <cfinput type="text" placeholder="Enter the key"
-                             name="key" message="Please enter number between 1 and 5">
+                             name="key">
                         </div>
                         <div class="form-control">
                             <cfinput type="text" placeholder="Enter the value"
-                             name="value" message="Please enter number between 1 and 5">
-                        </div>
+                             name="value">
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

@@ -25,8 +25,8 @@
                     <cfform name="cftask_1" action="">
                         <div class="form-control">
                             <cfinput type="text" placeholder="Enter the number"
-                             name="number" message="">
-                        </div>
+                             name="number">
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

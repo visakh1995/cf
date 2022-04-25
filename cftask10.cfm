@@ -46,7 +46,7 @@
                         <div class="form-control">
                             <cfinput type="text" placeholder="Enter the value"
                              name="value" message="Please enter number between 1 and 5">
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

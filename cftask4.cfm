@@ -9,22 +9,23 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 4 CALENDER</h3>
-                    <p>Today's Date : 
+                    <br>
+                    <p><b>Today's Date : 
                     <cfoutput>
                      #DateFormat(Now())#
-                    </cfoutput>
+                    </cfoutput></b>
                     </p><br>
-                    <p>Current Month In Numeric :
+                    <p><b>Current Month In Numeric :
                         <cfoutput>
                             #DateFormat(Now(),"mm")#
-                        </cfoutput>
+                        </cfoutput></b>
                     </p><br>
-                    <p>Current Month In Word : 
+                    <p><b>Current Month In Word : 
                         <cfoutput>
                             #DateFormat(Now(),"mmmm")#
-                        </cfoutput>
+                        </cfoutput></b>
                     </p><br>
-                    <p>Last Friday :
+                    <p><b>Last Friday :
                     <cfset today = dayofweek(now())/>
                         <cfif today eq 7>
                             <span>
@@ -36,65 +37,64 @@
                             <span>
                                 <cfoutput>
                                 #dateformat(dateAdd ("d",-(1+today),now()))#</span>
-                                </cfoutput>
+                                </cfoutput></b>
                         </cfif>
 
                     </p><br>
-                    <p>Last Day Of Month: 
+                    <p><b>Last Day Of Month: 
                         <cfset dStartDate = createDate(year(now()), month(now()), 1 ) />
                         <cfset dEndDate = dateAdd('d', -1, dateAdd('m', 1, dStartDate )) />                        
                         <cfoutput>
                             #DateFormat(dEndDate,"dd/mm/yyyy")#
-                        </cfoutput>
-                    </p><br>
-                    <p>Last Five Days: </p><br>
-
+                        </cfoutput></b>
+                    </p><br><br>
+                    <p><b>Last Five Days: </p><br><hr><br>
                         <cfset startDate = Now()-1>
                         <cfset endDate = Now()-5>
                         <cfloop from="#startDate#" to="#endDate#" index="i" step="-1">
                             <cfif DateFormat(i,"dddd") eq "Monday">
-                                <p style="color:green">
+                                <p style="color:green"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
-                                    </cfoutput>
+                                    </cfoutput></b>
                                 </p>
                             <cfelseif DateFormat(i,"dddd") eq "Tuesday">
-                                <p style="color:orange">
+                                <p style="color:orange"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
-                                    </cfoutput>
+                                    </cfoutput></b>
                                 </p>
                             <cfelseif DateFormat(i,"dddd") eq "Wednesday">
-                                <p style="color:yellow">
+                                <p style="color:yellow"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
-                                    </cfoutput>
+                                    </cfoutput></b>
                                 </p>
                             <cfelseif DateFormat(i,"dddd") eq "Thursday">
-                                <p style="color:#fff">
+                                <p style="color:#000"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
-                                    </cfoutput>
+                                    </cfoutput></b>
                                 </p>
                             
                             <cfelseif DateFormat(i,"dddd") eq "Friday">
-                                <p style="color:blue">
+                                <p style="color:blue"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
-                                    </cfoutput>
+                                    </cfoutput></b>
                                 </p>
                             <cfelseif DateFormat(i,"dddd") eq "Saturday">
-                                <p style="color:red">
+                                <p style="color:red"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
                                     </cfoutput>
-                                </p>
+                                </b></p>
                             <cfelseif DateFormat(i,"dddd") eq "Sunday">
-                                <p style="color:red">
+                                <p style="color:red"><b>
                                     <cfoutput>
                                         #DateFormat(i,"dd-mmm-yyyy -dddd")#
                                     </cfoutput>
-                                </p>
+                                </b></p>
                             </cfif>
                      
                         </cfloop>
