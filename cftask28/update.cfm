@@ -25,11 +25,11 @@
                              name="pageName" value="#pageName#">
                              <cfinput type="hidden"
                              name="pageId" value="#pageId#">
-                        </div>
+                        </div><br><br>
                         <div class="form-controls">
                             <cftextarea rows="5" cols="39" class="texts" 
                             name="pageDescription" value="#pageDescription#" placeholder="Page Description"/>
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="update">
                         <div>

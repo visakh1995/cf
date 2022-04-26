@@ -11,8 +11,7 @@
     <cfset que = QueryGetRow(listOuts,rowNumber)/>
     <cfset arrayAppend(arrayShown,"first Name of #rowNumber# is #que.firstName#")>
     <cfset arrayAppend(arrayShown,"Last Name of #rowNumber# is #que.lastName#")>
-
-     </cfif>
+    </cfif>
 </cfif>
 
 <html>
@@ -20,19 +19,6 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <title>CF TASKS</title>
     </head>
-    <style>
-        table{
-            border:1px solid grey;
-            background-color : yellow;
-            position:absolute;
-            left:300px;
-            top:100px;
-        }
-        td,th{
-            border :1px solid #000;
-        }
-
-    </style>
     <body>
         <section>
             <div class="main-container">
@@ -73,7 +59,7 @@
                         </table>
                     </cfif>
                     <div>
-            </div>
+                </div>
         </section>
     </body>
 </html>

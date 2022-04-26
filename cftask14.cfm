@@ -40,7 +40,7 @@
                 <cfinvoke component="components.userDefined" 
                 method="createImageUpload" returnVariable="insertedData" 
                 argumentCollection="#Form#"> 
-                        <cfinvokeargument  name="imageName" value=" #fileupload.serverfile#">
+                        <cfinvokeargument  name="imageName" value="#fileupload.serverfile#">
                 </cfinvoke>
             </cfif>           
         </cfif>

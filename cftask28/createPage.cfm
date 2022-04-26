@@ -14,11 +14,11 @@
                         <div class="form-control">
                             <cfinput type="text" placeholder="Page name"
                              name="pageName">
-                        </div>
+                        </div><br>
                         <div class="form-controls">
                             <cftextarea rows="5" cols="39" class="texts" 
                             name="pageDescription"  placeholder="Page Description"/>
-                        </div>
+                        </div><br><br>
                         <div class="form-btn">
                             <cfinput type="submit" class="btn" name="Submit">
                         <div>

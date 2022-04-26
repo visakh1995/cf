@@ -5,32 +5,27 @@
         <title>CF TASKS</title>
     </head>
     <body>
-
         <section>
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 3 CFCONTINUE</h3>
-                    <cfif structKeyExists(form,'Submit')>
-                        <cfset number = form.number/>
-                        <cfloop list = #number# index="i" delimiters = "," >
-                           <cfif i mod 3>
-                            <cfcontinue>
-                           <cfelse>
+                    <cfif isDefined("aMessages")>
+                        <div class="alert">
                             <cfoutput>
-                                #i#,
+                                <p>#aMessages#</p>
                             </cfoutput>
-                           </cfif>
-                        </cfloop>
+                        </div>
                     </cfif>
-                    <cfform name="cftask_1" action="">
+                    <form name="cftask_1" method="post"
+                        action="components/taskdefined.cfc?method=cfContinue">
                         <div class="form-control">
-                            <cfinput type="text" placeholder="Enter the number"
+                            <input type="text" placeholder="Enter the number"
                              name="number">
                         </div><br><br>
                         <div class="form-btn">
-                            <cfinput type="submit" class="btn" name="Submit">
+                            <input type="submit" class="btn" name="Submit">
                         <div>
-                    </cfform>
+                    </form>
                 </div>
             </div>
         </section>

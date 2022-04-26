@@ -9,7 +9,13 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 4 CALENDER</h3>
-                    <br>
+                    <cfobject component = "components.taskdefined" name ="dayDetails">
+                    <cfinvoke component ="#dayDetails#"  method="dayValueCalc"
+                    returnVariable = "results">
+                    </cfinvoke>
+                    <cfdump var="#results#">
+
+                    
                     <p><b>Today's Date : 
                     <cfoutput>
                      #DateFormat(Now())#
@@ -39,7 +45,6 @@
                                 #dateformat(dateAdd ("d",-(1+today),now()))#</span>
                                 </cfoutput></b>
                         </cfif>
-
                     </p><br>
                     <p><b>Last Day Of Month: 
                         <cfset dStartDate = createDate(year(now()), month(now()), 1 ) />
@@ -96,7 +101,6 @@
                                     </cfoutput>
                                 </b></p>
                             </cfif>
-                     
                         </cfloop>
                 </div>
             </div>

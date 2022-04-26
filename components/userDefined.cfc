@@ -13,7 +13,8 @@
             VALUES(
                 <cfqueryparam value="#form.name#">,
                 <cfqueryparam value="#form.description#">,
-                <cfqueryparam value ="#imageName#">            )
+                <cfqueryparam value ="#imageName#">          
+                  )
         </cfquery>
             <cflocation url="./cftaskextended.cfm" > 
     </cffunction>
@@ -56,7 +57,7 @@
             <cfoutput> <br>
         </cfoutput>
         </cfloop>
-      </cffunction>
+    </cffunction>
 
     <cffunction name="makeRandomString" returnType="string" output="false">
         <cfset var chars = "23456789ABCDEFGHJKMNPQRS">

@@ -36,7 +36,7 @@
                             </cfoutput>
                         </div>
                     </cfif>
-                    <cfform name="cftask_1" action="">
+                    <cfform name="cftask_1" action="components/taskdefined.cfc?method=cfAgeView">
                         <div class="form-controls">
                             <cfinput type="date" placeholder="Date of birth of mother"
                              name="mDob">

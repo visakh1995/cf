@@ -49,7 +49,7 @@
                              name="username">
                         </div>
                         <div class="form-controls">
-                            <cfinput type="text" placeholder="Password"
+                            <cfinput type="password" placeholder="Password"
                              name="password">
                         </div><br><br>
                         <div class="form-btn">

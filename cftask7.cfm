@@ -24,7 +24,7 @@
 
                         <cfif StructKeyExists(Session,"mystruct")>
                             <cfif IsDefined("key") AND isDefined("value")>
-                                    <cfset Session.mystruct["#key#"] = "#value#">
+                                    <cfset Session.mystruct["#key#"] = value>
                             </cfif>
                         </cfif>
 

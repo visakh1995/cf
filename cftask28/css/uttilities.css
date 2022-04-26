@@ -51,27 +51,54 @@ table {
     position: relative;
     border-collapse: collapse; 
     background-color: #f6f6f6;
+    width:800px;
   }/* Spacing */
   td, th {
     border: 1px solid #999;
     padding: 20px;
   }
   th {
-    background: brown;
+    background: #047ade;
     color: white;
     border-radius: 0;
     position: sticky;
     top: 0;
-    padding: 10px;
+    padding: 15px;
+    font-size: 12px;
   }
   .primary{
     background-color: #000000
   }
+  .main-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:60vh;
+  }
+  .btn-cms{
+    padding:7px 18px;
+    border:none;
+    border-radius: 2px;
+    color:#fff;
+    background-color:#047ade;
+    margin-left: 90px;
+  }
+  .button-cms{
+    padding:7px 18px;
+    border:none;
+    border-radius:5px;
+    background-color:#047ade;
+  }
+  .button-cms a{
+    color:white;
+  }
+  .bx-log-out{
+    padding:10px;
+    background-color: #000000;
+    color: #fff;
+    border:none;
+  }
+  .session_name{
+    color:#fff;
+  }
   
-  tfoot > tr  {
-    background: black;
-    color: white;
-  }
-  tbody > tr:hover {
-    background-color: #ffc107;
-  }

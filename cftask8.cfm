@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <link rel="stylesheet" href="css/style.css" type="text/css">
@@ -24,7 +23,7 @@
 
                         <cfif StructKeyExists(Session,"mystructs")>
                             <cfif IsDefined("key") AND isDefined("value")>
-                                    <cfset Session.mystructs["#key#"] = "#value#">
+                                    <cfset Session.mystructs["#key#"] = value>
                             </cfif>
                         </cfif>
 

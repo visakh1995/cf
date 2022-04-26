@@ -29,7 +29,6 @@
                     <span class="text nav-text">Create Page</span>
                     </a>
                 </li>
-
             </ul>
         </div>
        </cfif>
@@ -43,16 +42,15 @@
                       <cfoutput>
                       <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 60, 60)#"
                       sessionManagement="yes">
-                        <div class="name">#Session.Credentials.username#</div>
+                        <div class="session_name">#Session.Credentials.username#</div><br>
                         <button class="logout" name="logout"><a href="action.cfm?logout">
-                          <i class='bx bx-log-out' id="log_out"></i>
+                          <i class='bx bx-log-out' id="log_out">logout</i>
                         </a></button>
                       </cfoutput>
                     </div>
                 </div>
             </div>
         </div>
-
       </nav>
       
         <div class="main-container">
@@ -60,9 +58,9 @@
                 <thead>
                   <tr>
                     <th class="primary" scope="col">Page ID</th>
-                    <th scope="col">Page Name</th>
-                    <th scope="col">PageDescription</th>
-                    <th scope="col">Status</th>
+                    <th>Page name</th>
+                    <th>Page description</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,10 +73,10 @@
                         <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 60, 60)#"
                         sessionManagement="yes">
                         <cfif Session.Credentials.role eq 1 OR  Session.Credentials.role eq 2>
-                            <button class="btn-cms"><a href="update.cfm?ID=#pageId#">edit</a></button>
-                            <button class="btn-cms"><a href="action.cfm?DELETE=#pageId#">delete</a></button>
+                            <button class="button-cms tab"><a href="update.cfm?ID=#pageId#">edit</a></button>
+                            <button class="button-cms"><a href="action.cfm?DELETE=#pageId#">delete</a></button>
                         <cfelseif Session.Credentials.role eq 3>
-                            <button class="btn-cms">ACTIVE</button>
+                            <button class="button-cms">ACTIVE</button>
                         </cfif>
                       </td>
                     </tr>
@@ -87,52 +85,4 @@
               </table>
         </div>
     </body>
-    <style>
-    /* table */
-
-      table {
-          text-align: left;
-          position: relative;
-          border-collapse: collapse; 
-          background-color: #f6f6f6;
-          width:780px;
-        }/* Spacing */
-        td, th {
-          border: 1px solid #999;
-          padding: 20px;
-        }
-        th {
-          background:  #047ade;
-          color: white;
-          border-radius: 0;
-          position: sticky;
-          top: 0;
-          padding: 10px;
-        }
-        .primary{
-          background-color: #000000
-        }
-        
-        tfoot > tr  {
-          background: black;
-          color: white;
-        }
-        tbody > tr:hover {
-          background-color: #ffc107;
-        }
-        .main-container{
-          display:flex;
-          justify-content: center;
-          align-items: center;
-          height:60vh;
-        }
-        .btn-cms{
-          padding:7px 18px;
-          border:none;
-          border-radius: 2px;
-          color:#fff;
-          background-color:#047ade;
-          margin-left: 90px;
-        }
-    </style>
 </html>

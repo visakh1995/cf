@@ -32,7 +32,6 @@
                                      <cfset sortedArray = myStructArray.sort("text","asc")>
                                      <cfdump var = #sortedArray#>
                                      <!--- <cfset mySort = StructSort(Session.mystructs,"text","asc")> --->
-
                                 </cfif>
                            </cfif>
                         </cfif>

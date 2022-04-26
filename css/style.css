@@ -44,7 +44,7 @@ body{
     padding:5px 0px;
     text-align: center;
  }
-input[type="number"],[type="text"],[type="email"],[type="date"],[type="textarea"]{
+input[type="number"],[type="text"],[type="email"],[type="password"],[type="date"],[type="textarea"]{
     border:none;
     padding:3px;
     border-bottom: 1px solid grey;
@@ -118,4 +118,14 @@ input:focus{
     font-size:20px;
     color:darkgreen;
     font-weight:bold;
+}
+table{
+    border:1px solid grey;
+    background-color : yellow;
+    position:absolute;
+    left:300px;
+    top:100px;
+}
+td,th{
+    border :1px solid #000;
 }
