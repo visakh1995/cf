@@ -16,7 +16,7 @@
                         </div>
                     </cfif>
                     <form name="cftask_1" method="post"
-                    action="components/taskdefined.cfc?method=cfCaseValues">
+                        action="components/taskdefined.cfc?method=cfCaseValues">
                         <div class="form-control">
                             <input type="number" placeholder="Enter the number"
                              name="number">

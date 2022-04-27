@@ -5,19 +5,27 @@
         <title>CF TASKS</title>
     </head>
     <body>
+        <cfif structKeyExists(form,'Submit')>
+            <cfset value = form.number>
+            <cfinvoke component="components.taskdefined" 
+            method="cfContinue" returnVariable="Data"> 
+            <cfinvokeargument  name="number"  value="#value#">
+            </cfinvoke>
+        </cfif>
         <section>
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 3 CFCONTINUE</h3>
-                    <cfif isDefined("aMessages")>
-                        <div class="alert">
-                            <cfoutput>
-                                <p>#aMessages#</p>
-                            </cfoutput>
-                        </div>
-                    </cfif>
-                    <form name="cftask_1" method="post"
-                        action="components/taskdefined.cfc?method=cfContinue">
+                    <form name="cftask_1" method="post" action="">
+                        <cfif isDefined("Data") AND NOT arrayIsEmpty(Data)>
+                            <div class="alert">
+                                <cfloop array = #Data# index="alerter">
+                                    <cfoutput>
+                                        #alerter#,
+                                    </cfoutput>
+                                </cfloop>
+                            </div>
+                        </cfif>
                         <div class="form-control">
                             <input type="text" placeholder="Enter the number"
                              name="number">

@@ -129,3 +129,21 @@ table{
 td,th{
     border :1px solid #000;
 }
+.col-green{
+    color:green;
+}
+.col-orange{
+    color:orange;
+}
+.col-yellow{
+    color:yellow;
+}
+.col-zero{
+    color:#000;
+}
+.col-blue{
+    color:blue;
+}
+.col-red{
+    color:red;
+}
