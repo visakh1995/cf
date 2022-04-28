@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <link rel="stylesheet" href="css/style.css" type="text/css">
@@ -7,18 +6,18 @@
     <body>
         <cfif structKeyExists(form,'Submit')>
             <cfinvoke component="components.taskdefined" 
-            method="structureDisplay" returnVariable="Data"> 
+            method="structureDisplay" returnVariable="Datas"> 
             <cfinvokeargument  name="key"  value="#form.key#">
             <cfinvokeargument  name="value"  value="#form.value#">
             </cfinvoke>
-            <cfdump var =#Data#>
+            <cfdump var =#Datas#>
         </cfif>
 
         <section>
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 6 STRUCTURE</h3>
-                    <form name="cftask_1" mrthod="post" action="">
+                    <form name="cftask_1" method="post" action="">
                         <div class="form-control">
                             <input type="text" placeholder="Enter the key"
                              name="key">

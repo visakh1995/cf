@@ -1,14 +1,3 @@
-<cfif structKeyExists(form,'Submit')>
-    <cfset stringInput = form.stringValue/>
-    <cfset arrayAlert = arrayNew(1)/>
-    <cfset orginal = "the quick brown fox jumps over the lazy dog">
-    <cfset totsCount = listValueCountNoCase("the quick brown fox jumps over the lazy dog", stringInput," ") />
-    <cfset arrayAppend(arrayAlert,"Result as found,the key value '#stringInput#' 
-    in #totsCount# times - the quick brown fox jumps over the lazy dog.") />
-<!---     <cfdump var = #totsCount#> --->
-
-</cfif>
-
 <html>
     <head>
         <link rel="stylesheet" href="css/style.css" type="text/css">
@@ -19,24 +8,26 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 13 STRING</h3>
-                    <cfif isDefined("arrayAlert") AND NOT arrayIsEmpty(arrayAlert)>
-                        <cfloop array = #arrayAlert# index = "value">
+                    <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
+                    sessionManagement = "Yes">
+                        <cfif isDefined("Session.myStringStorage")>
+                            <cfloop collection="#Session.myStringStorage#" item="subject">
                             <div class="alert-green">
                                 <cfoutput>
-                                    <p>#value#<p>
+                                    <p>#Session.myStringStorage.result#<p/>
                                 </cfoutput>
                             </div>
-                        </cfloop>
-                    </cfif>
-                    <cfform name="cftask_1" action="">
+                            </cfloop>
+                        </cfif>
+                    <form name="cftask_1" method="post" action="components/taskdefined.cfc?method=cfstringFinding">
                         <div class="form-control">
-                            <cfinput type="text" placeholder="Enter the string"
+                            <input type="text" placeholder="Enter the string"
                              name="stringValue">
                         </div><br><br>
                         <div class="form-btn">
-                            <cfinput type="submit" class="btn" name="Submit">
+                            <input type="submit" class="btn" name="Submit">
                         <div>
-                    </cfform>
+                    </form>
                 </div>
         </section>
     </body>

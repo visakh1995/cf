@@ -87,14 +87,14 @@
     <cffunction name="structureDisplay" access="remote">
         <cfargument name="key" required="true">
         <cfargument name="value" required="true">
-
         <cfset structDetails = structNew()/>
-        <cfset key = StructInsert(structDetails,key,value)/>
-        <cfreturn structDetails>
+        <cfset keys = StructInsert(structDetails,arguments.key,arguments.value)/>
+        <cfreturn structDetails> 
     </cffunction>
 
     <cffunction name="structurePreviousFetch" access="remote">
-
+        <cfargument name="key" required="true">
+        <cfargument name="value" required="true">
         <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
         sessionManagement = "Yes">
         <cfif NOT StructKeyExists(Session,"mystruct")>
@@ -103,14 +103,191 @@
             </cflock>
         </cfif>
         <cfif StructKeyExists(Session,"mystruct")>
-            <cfif IsDefined("key") AND isDefined("value")>
-                    <cfset Session.mystruct["#key#"] = value>
+            <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
+                    <cfset Session.mystruct["#arguments.key#"] = arguments.value>
             </cfif>
         </cfif>
         <cfreturn Session.mystruct> 
-
     </cffunction>
 
+    <cffunction name="replaceStructure" access="remote">
+        <cfargument name="key" required="true">
+        <cfargument name="value" required="true">
+        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
+        sessionManagement = "Yes">
+
+        <cfif NOT StructKeyExists(Session,"mystructs")>
+        <cflock timeout="20" scope="Session" type="Exclusive">
+            <cfset Session.mystructs = structNew()>
+        </cflock>
+        </cfif>
+
+        <cfif StructKeyExists(Session,"mystructs")>
+            <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
+                <cfset Session.mystructs["#arguments.key#"] = arguments.value>
+            </cfif>
+        </cfif>
+        <cfreturn Session.mystructs> 
+    </cffunction>
+
+    <cffunction name="showReplaceStructure" access="remote">
+        <cfargument name="key" required="true">
+        <cfargument name="value" required="true">
+        <cfset alertArray = arrayNew(1)>
+        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
+        sessionManagement = "Yes">
+
+        <cfif NOT StructKeyExists(Session,"myStructShow")>
+            <cflock timeout="20" scope="Session" type="Exclusive">
+                <cfset Session.myStructShow = structNew()>
+            </cflock>
+        </cfif>
+        <cfif StructKeyExists(Session,"myStructShow")>
+            <cfset alertArray = arrayNew(1)/>
+            <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
+                <cfif structKeyExists("#Session.myStructShow#", arguments.key)>
+                    <cfset arrayAppend(alertArray,"#arguments.key# already present,not add again")>
+                <cfelse>
+                    <cfset Session.myStructShow["#arguments.key#"] = "#arguments.value#">
+                </cfif>
+            </cfif>
+        </cfif>
+        <cfdump var=#Session.myStructShow#>
+        <cfreturn alertArray> 
+    </cffunction>
+
+    <cffunction name="showAlphabeticalStructure" access="remote">
+        <cfargument name="key" required="true">
+        <cfargument name="value" required="true">
+        <cfset alertArray = arrayNew(1)>
+        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
+        sessionManagement = "Yes">
+
+        <cfif NOT StructKeyExists(Session,"myStructAlph")>
+            <cflock timeout="20" scope="Session" type="Exclusive">
+                <cfset Session.myStructAlph = structNew()>
+            </cflock>
+        </cfif>
+        <cfif StructKeyExists(Session,"myStructAlph")>
+            <cfset alertArray = arrayNew(1)/>
+            <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
+                <cfif structKeyExists("#Session.myStructAlph#",arguments.key)>
+                    <cfset arrayAppend(alertArray,"#arguments.key# already present,not add again")>
+                <cfelse>
+                    <cfset Session.myStructAlph["#arguments.key#"] = "#arguments.value#">
+                    <!---<cfset myStructArray = structKeyArray(Session.myStructAlph)> --->
+                    <!--- <cfset sortedArray = myStructArray.sort("text","asc")> --->
+                </cfif>
+            </cfif>
+        </cfif>
+        <cfdump var=#Session.myStructAlph#> 
+        <cfreturn alertArray>
+    </cffunction>
+
+    <cffunction name="listOutDataByNumber" access="remote">
+        <cfargument name="rowNumber" required="true">
+        <cfset arrayShown = arrayNew(1)>
+        <cfif rowNumber gt 10>
+            <cfset arrayAppend(arrayShown,'Please provide value less than 10')/>
+        <cfelse>
+            <cfinvoke component = "components.userDefined" 
+             method = "retrieveTableList" returnVariable = "listOuts">
+            <cfinvokeargument  name="numberRow"  value="#rowNumber#"> 
+            </cfinvoke>
+        <cfset que = QueryGetRow(listOuts,rowNumber)/>
+        <cfset arrayAppend(arrayShown,"first Name of #rowNumber# is #que.firstName#")>
+        <cfset arrayAppend(arrayShown,"Last Name of #rowNumber# is #que.lastName#")>
+        </cfif>
+        <cfreturn >
+    </cffunction>
+
+    <cffunction name ="multipled" returnType="string">
+        <cfset argCount = ArrayLen(Arguments)>
+        <cfset multipleValue = 1>
+        <cfloop from ="1" to = "#argCount#" index="i" step="1">
+            <cfset multipleValue = multipleValue * Arguments[i] >
+        </cfloop>
+        <cfreturn multipleValue>
+    </cffunction>
+
+    <cffunction  name="cfstringFinding" access="remote">
+        <cfargument name="stringValue" required="true">
+        <cfset orginal = "the quick brown fox jumps over the lazy dog">
+        <cfset totsCount = listValueCountNoCase("the quick brown fox jumps over the lazy dog", arguments.stringValue," ") />
+        <cfset display ="Result as found,the key value '#arguments.stringValue#' 
+        in #totsCount# times - the quick brown fox jumps over the lazy dog." />
+
+        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
+        sessionManagement = "Yes">
+
+        <cfif NOT StructKeyExists(Session,"myStringStorage")>
+        <cflock timeout="20" scope="Session" type="Exclusive">
+            <cfset Session.myStringStorage = structNew()>
+        </cflock>
+        </cfif>
+
+        <cfif StructKeyExists(Session,"myStringStorage")>
+            <cfif IsDefined("arguments.stringValue")>
+                <cfset Session.myStringStorage["result"] = display>
+            </cfif>
+        </cfif>
+        <cflocation  url="../cftask13.cfm">
+    </cffunction>
+
+    <cffunction  name="imageProcess" access="remote">
+        <cfargument name="name" required="true">
+        <cfargument name="description" required="true">
+        <cfargument name="image" required="true">
+        <cfset thisDir = expandPath("..\uploads\")>
+        <cfset imageArray = arrayNew(1)>
+        <cfset aMessages = "">
+
+        <cfif len(trim(arguments.image))>
+        <cffile action="upload" fileField="image"
+            nameconflict="overwrite" result = "fileupload"
+            destination="#thisDir#">
+        
+        <cfif fileUpload.fileWasSaved>
+        <cfset path = fileupload.serverdirectory & "\" & fileupload.serverfile>
+            <cfif NOT isImageFile(path)> 
+                <cfset errors = "Invalid Image!<br />"> 
+                <cffile action="delete" file="#path#">
+                <cfelseif fileupload.filesize gt 1000000>
+                        <cfset aMessages = "File size is greater tah 1 mb,please try again">                       
+                        <cflocation url="../cftask14.cfm?aMessages=#aMessages#"> 
+                <cfelse>
+                    <cfimage action="read" source = "../uploads/#fileUpload.serverfile#" name = "myImage">
+                    <cfset ImageScaleToFit(myImage,75,75,"bilinear")>
+                    <cfset newImageName = fileUpload.serverDirectory & "/" &
+                        fileUpload.serverFilename & "_thumbnail." &
+                        fileUpload.serverFileExt>
+            
+                <cfimage source ="#myImage#" action="write"
+                    destination = "#newImageName#" overwrite ="yes">
+                    <!---<cfset arrayAppend(imageArray, "created a new thumbnail image")> --->
+                    <cfoutput>
+                        <div class='d-flex flex-column justify-content-center align-items-center'>
+                            <p class=' text-success font-weight-bold'>
+                            File Uploaded and thumbnail created!!<p>
+                            <cfimage source="#newImageName#" action="writeToBrowser">
+                        </div>
+                    </cfoutput>
+                    <!--- db insert code here--->
+                <cfquery name="addImageData" result = result  datasource="cruddb">
+                    INSERT INTO coldfusiion.cftask_image (name,description,image)
+                    VALUES(
+                        <cfqueryparam value="#form.name#">,
+                        <cfqueryparam value="#form.description#">,
+                        <cfqueryparam value ="#fileupload.serverfile#">          
+                          )
+                    </cfquery>
+                    <cflocation url="../cftaskextended.cfm" > 
+                    <!--- db insert done --->
+            </cfif>           
+        </cfif>
+        </cfif>
+        
+    </cffunction>
     
 
     

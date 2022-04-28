@@ -73,6 +73,13 @@ input:focus{
     font-size: 13px;
     border-radius: 5px;
 }
+.alerts{
+    background-color: red;
+    text-align: center;
+    color:#fff;
+    font-size: 13px;
+    border-radius: 5px;
+}
 .alert-green{
     background-color: green;
     text-align: center;
@@ -146,4 +153,7 @@ td,th{
 }
 .col-red{
     color:red;
+}
+.texts{
+    width:100%;
 }

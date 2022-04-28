@@ -65,3 +65,75 @@
 
     </body>
 </html>
+
+<!--- <cfscript>
+    function multiply(a,b){
+        var argCount = ArrayLen(Arguments);
+        // writeDump(argCount);
+        var multiple = 1;
+        for(i = 1; i LTE argCount;i = i + 1){
+            multiple = multiple *  Arguments[i];
+        }
+        writeDump(multiple);
+    }
+    multiply(3,5,1,2,3,2,2);
+</cfscript> --->
+
+<cffunction  name="imageProcess" access="remote">
+    <cfargument name="name" required="true">
+    <cfargument name="description" required="true">
+    <cfargument name="image" required="true">
+    <cfset thisDir = expandPath("..\uploads\")>
+    <cfset imageArray = arrayNew(1)>
+    <cfif len(trim(arguments.image))>
+    <cffile action="upload" fileField="image"
+        nameconflict="overwrite" result = "fileupload"
+        destination="#thisDir#">
+    
+    <cfif fileUpload.fileWasSaved>
+    <cfset path = fileupload.serverdirectory & "\" & fileupload.serverfile>
+        <cfif NOT isImageFile(path)> 
+            <cfset errors = "Invalid Image!<br />"> 
+            <cffile action="delete" file="#path#">
+            <cfelseif fileupload.filesize gt 1000000>
+                <cfoutput>
+                    <cfset arrayAppend(imageArray, "File size is greater tah 1 mb,please try again")>
+                </cfoutput>
+            <cfelse>
+                <cfimage action="read" source = "../uploads/#fileUpload.serverfile#" name = "myImage">
+                <cfset ImageScaleToFit(myImage,75,75,"bilinear")>
+                <cfset newImageName = fileUpload.serverDirectory & "/" &
+                    fileUpload.serverFilename & "_thumbnail." &
+                    fileUpload.serverFileExt>
+        
+            <cfimage source ="#myImage#" action="write"
+                destination = "#newImageName#" overwrite ="yes">
+            <cfset arrayAppend(imageArray, "created a new thumbnail image")>
+                <cfoutput>
+                    <div class='d-flex flex-column justify-content-center align-items-center'>
+                        <p class=' text-success font-weight-bold'>
+                        File Uploaded and thumbnail created!!<p>
+                        <cfimage source="#newImageName#" action="writeToBrowser">
+                    </div>
+                </cfoutput>
+                <!--- db insert code here--->
+                <cfquery name="addImageData" result = result  datasource="cruddb">
+                    INSERT INTO coldfusiion.cftask_image (name,description,image)
+                    VALUES(
+                        <cfqueryparam value="#form.name#">,
+                        <cfqueryparam value="#form.description#">,
+                        <cfqueryparam value ="#fileupload.serverfile#">          
+                          )
+                </cfquery>
+                    <cflocation url="../cftaskextended.cfm" > 
+                <!---    --->
+            <cfinvoke component="components.userDefined" 
+                method="createImageUpload" returnVariable="insertedData" 
+                argumentCollection="#Form#"> 
+                <cfinvokeargument  name="imageName" value="#fileupload.serverfile#">
+            </cfinvoke>
+        </cfif>           
+    </cfif>
+    </cfif>
+    
+</cffunction>
