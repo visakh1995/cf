@@ -9,32 +9,32 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 17</h3>
-                    <cfform name="myForm" action="">
-                        <div id="alert"></div>
+                    <div id="alert"></div>
+                    <form name="myForm"  method="post" 
+                        action="components/taskdefined.cfc?method=oddEvenFinding">
                         <div class="form-control">
-                            <cfinput type="text" id = "enteredValue" placeholder="Please enter numeric value"
-                             name="number" validate="numeric" message="Please enter numeric value"
-                             onError="showErrorMessage">
+                        <input type="text" id = "enteredValue" 
+                            placeholder="Please enter numeric value"
+                            name="number" validate="numeric" message="Please enter numeric value"
+                            onError="showErrorMessage">
                         </div><br><br>
                         <div class="form-btn">
-                            <cfinput type="submit" class="btn" name="Submit" >
+                            <input type="submit" class="btn" name="Submit" onclick = showErrorMessage()>
                         <div>
-                    </cfform>
-                    <cfif structKeyExists(form,'Submit')>
-                        <cfset value = form.number>
-                        <cfif isNumeric(value)>
-                            <cfloop from ="1" to =#value# index="i">
+                    </form>
+          
+                    <cfif isDefined("Session.myIntegerStorage")>
+                        <cfloop array = #Session.myIntegerStorage# index = "value">
+                            <div class="">
                                 <cfoutput>
-                                    <cfif #i# MOD 2 EQ 0>
-                                        <span class="even">#i#</span>
+                                    <cfif value MOD 2 EQ 0>
+                                        <span class="even">#value#</span>
                                     <cfelse>
-                                        <span class="odd">#i#</span>
-                                    </cfif>
-                                    <br>
+                                        <span class="odd">#value#</span>
+                                    </cfif><br>
                                 </cfoutput>
-                             </cfloop>
-                        </cfif>
-
+                            </div>
+                        </cfloop>
                     </cfif>
                 </div>
             </div>
@@ -44,6 +44,7 @@
     function showErrorMessage() {
         var value = document.getElementById("enteredValue").value;
         if(isNaN(value)){
+            event.preventDefault();
             document.getElementById("alert").innerHTML ="Please enter Numeric value";
         }else{
             return;

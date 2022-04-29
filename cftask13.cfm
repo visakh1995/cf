@@ -8,8 +8,6 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 13 STRING</h3>
-                    <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-                    sessionManagement = "Yes">
                         <cfif isDefined("Session.myStringStorage")>
                             <cfloop collection="#Session.myStringStorage#" item="subject">
                             <div class="alert-green">

@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <link rel="stylesheet" href="css/style.css" type="text/css">
@@ -9,64 +8,38 @@
             <div class="main-container">
                 <div class="card1">
                     <h3 class="heading">CF TASK 21</h3>
-                    <cfif structKeyExists(form,'Submit')>
-                        <cfset thisDir = expandPath(".\uploads\")>
-                        <cfset babayName = form.babyName>
-                        <cfset email = form.email>
-                        <cfset description = form.description>
-                        <cfset image = form.image>
-                        <cfset imageArray = arrayNew(1)>
-
-                        <cfif len(trim(form.image))>
-                            <cffile action="upload" fileField="image"
-                            nameconflict="overwrite" result = "fileupload"
-                            destination="#thisDir#">
-                            <cfif fileUpload.fileWasSaved>
-                                <cfset arrayAppend(imageArray, "file uploaded")>
-                                <cfmail
-                                from="Sender@Company.com"
-                                to="#email#"
-                                subject="#description#"
-                                type="html">
-                                <!---<p><img src="#thisDir#/#image# width="350" height="261" alt="" /><br /></p> --->
-                                </cfmail>
-                                <cfset arrayAppend(imageArray, "& mail forwarded successfully")>
-                            </cfif>
-                        </cfif>
-                    </cfif>
-                    <cfform name="cftask_1" enctype="multipart/form-data" action="">
-                        <cfif isDefined('imageArray') AND NOT arrayIsEmpty(imageArray)>
-                            <div class="alert">
+                    <form name="cftask_1" method="post" enctype="multipart/form-data"
+                        action="components/taskdefined.cfc?method=cfBirthdayWish">
+                        <cfif isDefined("aMessages")>
+                            <div class="alert-green">
                                 <cfoutput>
-                                    <cfloop array = #imageArray# index = "Detail">
-                                        <p>#Detail#</p>
-                                    </cfloop>
+                                    <p>#aMessages#</p>
                                 </cfoutput>
                             </div>
                         </cfif>
                         <div class="form-control">
-                            <cfinput type="text" placeholder="Enter the baby name"
-                             name="babyName">
+                            <input type="text" placeholder="Enter the baby name"
+                             name="babyName" required>
                         </div>
                         <div class="form-control">
-                            <cfinput type="email" placeholder="Enter the email "
-                             name="email">
+                            <input type="email" placeholder="Enter the email "
+                             name="email" required>
                         </div><br><br><br>
                         <div class="form-control">
-                            <cftextarea rows="5" cols="37" class="texts" 
-                            name="description"  placeholder="Birthday Wish here"/>
+                            <textarea rows="5" cols="37" class="texts" 
+                            name="description" required>
+                            </textarea>
                         </div><br><br>
                         <div class="form-control">
-                            <cfinput type="file" placeholder="Greetings Image"
-                             name="image" accept =" .jpg,.png,.gif">
+                            <input type="file" placeholder="Greetings Image"
+                             name="image" accept =".jpg,.png,.gif" required>
                         </div><br><br>
                         <div class="form-btn">
-                            <cfinput type="submit" class="btn" name="Submit">
+                            <input type="submit" class="btn" name="Submit">
                         <div>
-                    </cfform>
+                    </form>
                 </div>
             </div>
         </section>
     </body>
-
 </html>

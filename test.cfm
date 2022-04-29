@@ -137,3 +137,39 @@
     </cfif>
     
 </cffunction>
+
+
+<cfif #i# MOD 2 EQ 0>
+    <span class="even">#i#</span>
+<cfelse>
+    <span class="odd">#i#</span>
+</cfif><br>
+
+                    <cfif isDefined("arrayShown") AND NOT arrayIsEmpty(arrayShown)>
+                        <cfloop array = #arrayShown# index = "values">
+                            <div class="alert">
+                                <cfoutput>
+                                    <p>#values#<p>
+                                </cfoutput>
+                            </div>
+                        </cfloop>
+                    </cfif>
+
+
+                    <div class="next">
+                        <cfif structKeyExists(form,'Submit') AND form.rowNumber lt 10>
+                            <table cellpadding = "5" cellspacing="7">
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                </tr>
+                                <cfoutput query = listOuts>
+                                <tr>
+                                    <td>#firstName#</td>
+                                    <td>#lastName#</td>
+                                </tr>
+                                </cfoutput>
+                            </table>
+                        </cfif>
+                        <div>
+                    </div>
