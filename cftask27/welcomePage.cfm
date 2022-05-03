@@ -39,8 +39,7 @@ sessionManagement="yes">
                     </section>
                 </body>
             </html>
-
     </cfif>
 <cfelse>
-    <cflocation  url="login.cfm">
+<!---     <cflocation  url="login.cfm"> --->
 </cfif>

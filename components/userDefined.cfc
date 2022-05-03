@@ -77,6 +77,12 @@
 
     <cffunction name="createFormDetails">
          <cfset imageValue = #cffile.serverFile#> 
+         
+        <cffile action="upload"
+        fileField="resume"
+        nameconflict="overwrite"
+        destination="C:\coldFusion2021\cfusion\wwwroot\test\uploads\">
+    
         <cfquery name="addData" result = result  datasource="cruddb">
             INSERT INTO coldfusiion.form_info (position,relocate,startDate,website,resumePath,salary,firstName,
             lastName,email,phone)

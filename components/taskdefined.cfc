@@ -401,6 +401,90 @@
         </cfquery>
         <cfreturn listOuts>
     </cffunction>
+
+    <cffunction name="createFormDetails" access="remote">
+        <cfargument name="position" required="true">
+        <cfargument name="checks" required="true">
+        <cfargument name="startDate" required="true">
+        <cfargument name="websiteName" required="true">
+        <cfargument name="salary" required="true">
+        <cfargument name="firstName" required="true">
+        <cfargument name="lastName" required="true">
+        <cfargument name="email" required="true">
+        <cfargument name="phone" required="true">
+        
+        <cffile action="upload"
+        fileField="resume"
+        nameconflict="overwrite"
+        destination="C:\coldFusion2021\cfusion\wwwroot\test\uploads\">
+
+        <cfset imageValue = #cffile.serverFile#> 
+        <cfquery name="addData" result = result  datasource="cruddb">
+            INSERT INTO coldfusiion.form_info (position,relocate,startDate,website,resumePath,salary,firstName,
+            lastName,email,phone)
+            VALUES(
+
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.position#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.checks#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.startDate#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.websiteName#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value="#imageValue#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.salary#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.firstName#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.lastName#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
+               <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">            
+               )
+       </cfquery>
+       <cfset message  ="Application submitted successfully">
+       <cflocation  url="../cftask23.cfm?aMessages=#message#">        
+   </cffunction>
+
+    <cffunction name="insertVerifiedEmailData" access="remote">
+        <cfargument name="name" required="true">
+        <cfargument name="email" required="true">
+        <cfquery name="insertValues" datasource="cruddb">
+            INSERT INTO coldfusiion.verify_table (fullName,email) VALUES(
+                <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.name#">,
+                <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.email#">
+            )
+        </cfquery>
+       <cfset message  ="Email verified and data submitted successfully...">
+       <cflocation  url="../cftask24.cfm?aMessages=#message#">  
+    </cffunction>
+
+    <cffunction  name="loginVerified" access="remote">
+        <cfargument name="username" required="true">
+        <cfargument name="password" required="true">
+        <cfset encodedPassword = hash("#Password#", "SHA-256", "UTF-8")>
+        <cfset errorShower = arrayNew(1)>
+
+        <cfquery name="verifiedDetails" datasource="cruddb">
+            SELECT *FROM coldfusiion.login_table WHERE userName = "#arguments.username#" AND 
+            password = "#arguments.password#"
+        </cfquery>
+
+        <cfif verifiedDetails.RecordCount gt 0>
+
+            <cfif NOT structKeyExists(Session,"adminCredentials")>
+                <cfdump var =#verifiedDetails.RecordCount#>
+                <cfabort>
+                <cflock  timeout="20" scope="Session" type="Exclusive">
+                    <cfset Session.adminCredentials = structNew()>
+                </cflock>
+            </cfif>
+            <cfif structKeyExists(Session,"adminCredentials")>
+                <cfset Session.adminCredentials["userName"] = "#verifiedDetails.userName#">
+                <cfset Session.adminCredentials["password"] = "#verifiedDetails.password#">
+                <cfset Session.adminCredentials["isAuthenticated"] = "True">
+            </cfif>
+            <cflocation  url="../cftask27/welcomePage.cfm"> 
+        <cfelse>
+        <cfset arrayAppend(errorShower, "Invalid login credentials,please try again")>
+    </cfif>
+
+    
+    </cffunction>
     
 
 

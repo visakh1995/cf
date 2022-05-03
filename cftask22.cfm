@@ -2,8 +2,13 @@
 <cfset dData = serializeJSON(jsonData)> 
 <cfset sData = deserializeJSON(dData)> 
 
-<table width="100%" cellpadding="5" 
-cellspacing="8" style="border: 1px solid black">
+<html>
+    <head>
+        <link rel="stylesheet" href="css/newstyle.css" type="text/css">
+    </head>
+    <body>
+    <table width="100%" cellpadding="2" 
+        cellspacing="7">
     <tr>
         <th>Name</th>
         <th>Age</th>
@@ -18,14 +23,8 @@ cellspacing="8" style="border: 1px solid black">
     </tr>
     </cfoutput>
     </cfloop>
-</table>
-<style>
-    td,th{
-        border :1px solid #000;
-        width:300px;
-    }
-</style>
+    </table>
+    </body>
+</html>
 
-<!--- <cfset check = isJSON(dData)> --->
-<!--- <cfdump var = #sData#> --->
-<!--- <cfdump var = #check#> --->
+

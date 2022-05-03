@@ -96,7 +96,7 @@ input:focus{
     font-size: 13px;
     border-radius: 5px;
 }
-.alerts{
+.alert{
     text-align: center;
     color:red;
     padding:5px;
@@ -126,4 +126,26 @@ input:focus{
 .file-label{
     display: flex;
     justify-content: flex-start;
+}
+td,th{
+    border :1px solid #000;
+    width:300px;
+}
+table{
+    width:70%;
+}
+.alerts{
+    background-color:red;
+    text-align: center;
+    color:#fff;
+    font-size: 13px;
+    border-radius: 5px;
+}
+.alert-green{
+    background-color: green;
+    text-align: center;
+    color:#fff;
+    padding:5px;
+    font-size: 13px;
+    border-radius: 5px;
 }

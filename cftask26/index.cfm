@@ -9,9 +9,10 @@
         <div class="main-container">
         <div class="card">
         <div class='container py-5 cform_div'>
-        <h3 class='text-center'>CFTASK 25 - Word Count</h3>
+        <h3 class='text-center'>CFTASK 26 - Word Count</h3>
 
-        <cfform  method='post' action="" enctype="multipart/form-data" name="img_form" class='col-lg-6 offset-lg-3'>
+        <cfform  method='post' action="" enctype="multipart/form-data" 
+        name="img_form" class='col-lg-6 offset-lg-3'>
             <br><br><br>
             <div class="form-controls">
                 <cfinput type='file' name='doc_file' accept='.doc,.txt,.pdf'>

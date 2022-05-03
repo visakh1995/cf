@@ -14,26 +14,32 @@
                 <div class="card">
                     <h3 class="heading">CF TASK 24 </h3>
                     <div id="alerts"></div>
-                    <cfif structKeyExists(form,'Submit')>
+                    <cfif isDefined("aMessages")>
+                        <div class="alert-green">
+                            <cfoutput>
+                                <p>#aMessages#</p>
+                            </cfoutput>
+                        </div>
                     </cfif>
-                    <cfform name="cftask_1" action="cftask24action.cfm" method = "post">
+                    <form name="cftask_1" method = "post"
+                    action="components/taskdefined.cfc?method=insertVerifiedEmailData">
                         <div class="form-control">
-                            <cfinput type="text" placeholder="Name"
+                            <input type="text" placeholder="Name"
                              name="name">
                         </div>
                         <div class="form-control">
-                            <cfinput type="email" id="email" placeholder="Email"
+                            <input type="email" id="email" placeholder="Email"
                              name="email" required>
                         </div>
-                        <cfinput class="checkbox1" type="checkbox"
+                        <input class="checkbox1" type="checkbox"
                         name="checks" id="yes"
                         value="1"> accept terms and conditions
                         <br><br>
 
                         <div id="buttonOne" class="buttonOne">
-                            <cfinput type="submit" id="buttonChange" class="btn" name="Submit" disabled>
+                            <input type="submit" id="buttonChange" class="btn" name="Submit" disabled>
                         <div>
-                    </cfform>
+                    </form>
                 </div>
             </div>
         </section>
@@ -63,31 +69,5 @@
             });
         });
     </script>
-        <style>
-            .form-btn-disable{
-                padding:5px 15px;
-                border:none;
-                border-radius: 5px;
-                color:#fff;
-                text-align: center;
-                background-color:red;
-            }
-                #alerts{
-                background-color:red;
-                text-align: center;
-                color:#fff;
-                font-size: 13px;
-                border-radius: 5px;
-            }
-            input[type="email"]{
-                border:none;
-                padding:3px;
-                border-bottom: 1px solid grey;
-                font-size:15px;
-                width: 100%;
-                background-color: #fff;
-                margin-top: 50px;
-                }
-   
-        </style>
+
 </html>

@@ -16,9 +16,8 @@ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jI
 <cfoutput>
     <br>
     <h5>Results - Alphabetical Order</h5><hr>
-    
     </cfoutput>
-    <cfloop query="page" >
+    <cfloop query="page">
     <cfif isNumeric('#page.sentence#') EQ 'NO'>
         <cfif Len('#page.sentence#') GT 3>
             <cfif structKeyExists(structData, #page.sentence#)>

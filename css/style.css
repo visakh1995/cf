@@ -157,3 +157,18 @@ td,th{
 .texts{
     width:100%;
 }
+.form-btn-disable{
+    padding:5px 15px;
+    border:none;
+    border-radius: 5px;
+    color:#fff;
+    text-align: center;
+    background-color:red;
+}
+#alerts{
+    background-color: red;
+    text-align: center;
+    color:#fff;
+    font-size: 13px;
+    border-radius: 5px;
+}
