@@ -172,3 +172,20 @@ td,th{
     font-size: 13px;
     border-radius: 5px;
 }
+.logout{
+    padding:5px 15px;
+    border:none;
+    border-radius: 5px;
+    color:#fff;
+    background-color:rgb(5, 0, 0);
+    margin-left: 80px; 
+}
+.logout a{
+    text-decoration: none;
+}
+.welcome-heading{
+    text-align:center;
+    color:#fff;
+    font-size :25px;
+    margin-top:10px;
+}

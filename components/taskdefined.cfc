@@ -305,25 +305,29 @@
     <cffunction  name="cfdbFetch" access="remote">
         <cfargument  name="rowNumber" required="true">
         <cfset aDBMessages = "">
-        <cfif NOT StructKeyExists(Session,"myStorage")>
-            <cflock timeout="20" scope="Session" type="Exclusive">
-                <cfset Session.Storage = arrayNew(1)>
-            </cflock>
-        </cfif>
+
         <cfif arguments.rowNumber gt 10>
             <cfset aDBMessages = "Please provide value less than 10">
         <cfelse>
             <cfquery name="listOuts" datasource = "cruddb">
                 SELECT * FROM coldfusiion.cftasks
             </cfquery>
-        <cfset que = QueryGetRow(listOuts,rowNumber)/>
-        <cfset aDBMessages = "first Name of #arguments.rowNumber# is #que.firstName# And
-        Last Name of #arguments.rowNumber# is #que.lastName#">
+            <cfif NOT StructKeyExists(Session,"myStorage")>
+                <cflock timeout="20" scope="Session" type="Exclusive">
+                    <cfset Session.myStorage = arrayNew(1)>
+                </cflock>
+            </cfif>
+
+            <cfif StructKeyExists(Session,"myStorage")>
+                <cfset arrayAppend(Session.myStorage, listOuts)>
+            </cfif>             
+
+            <cfset que = QueryGetRow(listOuts,rowNumber)/>
+            <cfset aDBMessages = "first Name of #arguments.rowNumber# is #que.firstName# And
+            Last Name of #arguments.rowNumber# is #que.lastName#">
+            <cflocation  url="../cftask12.cfm?aMessages=#aDBMessages#"> 
+
         </cfif>
-        <cfif StructKeyExists(Session,"myIntegerStorage")>
-            <cfset arrayAppend(Session.Storage, listOuts)>
-        </cfif> 
-        <cflocation  url="../cftask12.cfm?aMessages=#aDBMessages#">
     </cffunction>
 
     <cffunction  name="cfCounter" access="remote">
@@ -457,7 +461,7 @@
         <cfargument name="username" required="true">
         <cfargument name="password" required="true">
         <cfset encodedPassword = hash("#Password#", "SHA-256", "UTF-8")>
-        <cfset errorShower = arrayNew(1)>
+        <cfset message  ="">
 
         <cfquery name="verifiedDetails" datasource="cruddb">
             SELECT *FROM coldfusiion.login_table WHERE userName = "#arguments.username#" AND 
@@ -465,10 +469,7 @@
         </cfquery>
 
         <cfif verifiedDetails.RecordCount gt 0>
-
             <cfif NOT structKeyExists(Session,"adminCredentials")>
-                <cfdump var =#verifiedDetails.RecordCount#>
-                <cfabort>
                 <cflock  timeout="20" scope="Session" type="Exclusive">
                     <cfset Session.adminCredentials = structNew()>
                 </cflock>
@@ -480,13 +481,142 @@
             </cfif>
             <cflocation  url="../cftask27/welcomePage.cfm"> 
         <cfelse>
-        <cfset arrayAppend(errorShower, "Invalid login credentials,please try again")>
-    </cfif>
-
-    
+            <cfset message  ="Invalid username or password">
+            <cflocation  url="../cftask27/login.cfm?aMessages=#message#">  
+        </cfif>
     </cffunction>
     
+    <cffunction name="CMSverifyCredentials" access="remote">
+        <cfargument name="username" type="string">
+        <cfargument name="password" type="string">
+            <cfquery name="verifiedCMSDetails" datasource="cruddb">
+                SELECT *FROM coldfusiion.cms_user WHERE userName = "#username#" AND 
+                password = "#password#"
+            </cfquery>
+            <cfset messages ="">
+        <cfif verifiedCMSDetails.RecordCount gt 0>
+            <cflogin>
+                <cfloginuser  name="#verifiedCMSDetails.userName#" 
+                roles="#verifiedCMSDetails.role#"
+                password="#verifiedCMSDetails.password#">
+            </cflogin>
 
+                <cfif NOT structKeyExists(Session, "Credentials")>
+                    <cflock  timeout="20" scope="Session" type="Exclusive">
+                        <cfset Session.Credentials = structNew()>
+                    </cflock>
+                </cfif>
+                <cfif structKeyExists(Session,"Credentials")>
+                    <cfset Session.Credentials["userName"] = "#verifiedCMSDetails.userName#">
+                    <cfset Session.Credentials["password"] = "#verifiedCMSDetails.password#">
+                    <cfset Session.Credentials["role"] = "#verifiedCMSDetails.role#">
+                    <cfset Session.Credentials["isAuthenticated"] = "True">
+                </cfif>
 
+                <cfif isUserInRole("1") OR isUserInRole("2") OR isUserInRole("3")>
+                    <cflocation  url="../cftask28/welcomePage.cfm">                  
+                </cfif>
+        <cfelse>
+            <cfset message  ="Invalid username or password,please try again...">
+            <cflocation  url="../cftask28/login.cfm?aMessages=#message#">  
+        </cfif>
+    </cffunction>
+
+    <cffunction name="updatePageDetails" access="remote">
+        <cfargument name="pageId" type="string">
+        <cfargument name="pageName" type="string">
+        <cfargument name="pageDescription" type="string">
+
+        <cfquery name="updateData" datasource="cruddb">
+           UPDATE coldfusiion.cms_page SET 
+           pageName = <cfqueryparam CFSQLType = "cf_sql_varchar" value="#arguments.pageName#">,
+           pageDescription  = <cfqueryparam  CFSQLType = "cf_sql_varchar" value="#arguments.pageDescription#">
+           WHERE pageId = "#arguments.pageId#"
+        </cfquery>
+        <cflocation url="../cftask28/welcomePage.cfm" >
+    </cffunction>
+
+    <cffunction name="deleteCmsPageDetails" access="remote">
+        <cfargument name="deleteId" required="yes">
+        <cfquery name="deleteData" datasource="cruddb">
+            DELETE FROM coldfusiion.cms_page WHERE pageId = "#deleteId#"
+        </cfquery>
+        <cflocation  url="../cftask28/welcomePage.cfm">
+    </cffunction>
+
+    <cffunction name="createPageDetails" access="remote">
+        <cfargument name="pageName" type="string">
+        <cfargument name="pageDescription" type="string">
+        <cfquery name="addData" result = result  datasource="cruddb">
+            INSERT INTO coldfusiion.cms_page (pageName,pageDescription)
+            VALUES(
+            <cfqueryparam CFSQLType = "cf_sql_varchar" value="#arguments.pageName#">,
+            <cfqueryparam CFSQLType = "cf_sql_varchar" value="#arguments.pageDescription#">
+             )
+        </cfquery>
+        <cflocation url="../cftask28/welcomePage.cfm" > 
+    </cffunction>
+
+    <cffunction name="loggedOut" access="remote">
+        <cfset StructDelete(Session, "Credentials")>
+        <cflocation  url="../cftask28/login.cfm">
+    </cffunction>
+
+    <cffunction name="structTextRetriever" access="remote">
+        <cfargument  name="description" type="string" required="yes">
+        <cfset mySentence = structNew()>
+        <cfset insertions =StructInsert(mySentence,"sentence","#arguments.description#")>
+        <cfset data = structKeyList(mySentence)>
+        <cfloop list= #data# index="i">
+            <cfquery name = "insertWords" datasource="cruddb">
+                INSERT INTO coldfusiion.words_table(sentence)
+                VALUES(
+                <cfqueryparam value="#i#">
+                 )
+            </cfquery>
+        </cfloop>
+        <cflocation url="../cftask25/showPage.cfm?desc='#arguments.description#">
+    </cffunction>
+
+    <cffunction  name="structTextRetrieveByFile" access="remote">
+        <cfset thisDir = expandPath("./uploads")>
+        <cfif len(trim(form.doc_file)) >
+            <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
+                nameconflict="overwrite">
     
+            <cfset file_name=#fileupload.serverfile# >
+            <cfset fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
+            <cffile action="read" file="#fileLoc#" variable="Contents">
+            <cfdump var=#Contents#>
+
+            <cfset words = reMatch("[[:word:]]+", Contents)>
+            <cfset mySentence = structNew()>
+                <cfloop array= #words# index="i">
+                    <cfif structKeyExists(mySentence, i)>
+                        <cfset mySentence[i]++>
+                    <cfelse>
+                        <cfset mySentence[i] = 1>
+                    </cfif>
+                </cfloop >
+    
+                <cfset skeys = structKeyList(mySentence)>
+                <cfloop list="#skeys#" index="i">
+                    <cfquery name="word" datasource="cruddb">
+                    INSERT INTO coldfusiion.read_count(sentence) VALUES('#i#' )
+                    </cfquery>
+                </cfloop>
+    
+                <cflocation url="../cftask26/viewpage.cfm?desc='#Contents#">
+        </cfif>
+    </cffunction>
+    <cffunction  name="showDetailsByID" access="remote">
+        <cfargument  name="detailsId" type="string" required="yes">
+        <cfquery name='img_details' datasource='cruddb'>
+            SELECT *
+            FROM coldfusiion.cftask_image
+            WHERE id="#detailsId#" 
+         </cfquery>
+        <cfreturn img_details>
+    </cffunction>
+
 </cfcomponent>

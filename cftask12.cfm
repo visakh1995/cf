@@ -28,20 +28,21 @@
                     </form>
                 </div>
                 <div class="next">
-                    <cfif structKeyExists(form,'Submit') AND form.rowNumber lt 10>
                         <table cellpadding = "5" cellspacing="7">
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                             </tr>
-                            <cfoutput query = listOuts>
-                            <tr>
-                                <td>#firstName#</td>
-                                <td>#lastName#</td>
-                            </tr>
-                            </cfoutput>
+                            <cfloop array = "#Session.myStorage#"  index="stored">
+                                <cfoutput>
+                                    <tr>
+                                        <td>#stored.firstName#</td>
+                                        <td>#stored.lastName#</td>
+                                    </tr>
+                                </cfoutput>
+                            </cfloop>
                         </table>
-                    </cfif>
+ 
                     <div>
                 </div>
         </section>

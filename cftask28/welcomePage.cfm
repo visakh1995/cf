@@ -18,9 +18,7 @@
             </div>
             <i class='bx bx-menu'></i>
         <div>
-          <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 60, 60)#"
-          sessionManagement="yes">
-          <cfif Session.Credentials.role eq 1 OR  Session.Credentials.role eq 2>
+        <cfif Session.Credentials.role eq 1 OR  Session.Credentials.role eq 2>
         <div class="nav_list">
             <ul class="menu-links">
                 <li class="nav-link">
@@ -40,10 +38,8 @@
                 <div class="profile_details">
                     <div class="name_job">
                       <cfoutput>
-                      <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 60, 60)#"
-                      sessionManagement="yes">
                         <div class="session_name">#Session.Credentials.username#</div><br>
-                        <button class="logout" name="logout"><a href="action.cfm?logout">
+                        <button class="logout" name="logout"><a href="../components/taskdefined.cfc?method=loggedOut">
                           <i class='bx bx-log-out' id="log_out">logout</i>
                         </a></button>
                       </cfoutput>
@@ -70,8 +66,6 @@
                       <td><a href="pageDetails.cfm?detailsID=#pageId#">#pageName#</a></td>
                       <td>#pageDescription#</td>
                       <td>
-                        <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 60, 60)#"
-                        sessionManagement="yes">
                         <cfif Session.Credentials.role eq 1 OR  Session.Credentials.role eq 2>
                             <button class="button-cms tab"><a href="update.cfm?ID=#pageId#">edit</a></button>
                             <button class="button-cms"><a href="action.cfm?DELETE=#pageId#">delete</a></button>

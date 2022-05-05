@@ -11,16 +11,17 @@
         <div class='container py-5 cform_div'>
         <h3 class='text-center'>CFTASK 26 - Word Count</h3>
 
-        <cfform  method='post' action="" enctype="multipart/form-data" 
+        <form  method='post' action="../components/taskdefined.cfc?method=structTextRetrieveByFile" 
+        enctype="multipart/form-data" 
         name="img_form" class='col-lg-6 offset-lg-3'>
             <br><br><br>
             <div class="form-controls">
-                <cfinput type='file' name='doc_file' accept='.doc,.txt,.pdf'>
+                <input type='file' name='doc_file' accept='.doc,.txt,.pdf'>
             </div><br><br>
             <div class="form-btn">
-                <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-primary">
+                <input type="submit" name="Submit"  value="Submit" class="btn btn-primary">
             <div>
-        </cfform>
+        </form>
         </div>
         </div>
         </div>
@@ -41,7 +42,7 @@
 
                 <cfobject component ="CF_TASK.components.newdefined" name="redirectObject">
                 <cfinvoke component="#redirectObject#"
-                method="structTextRetriever" returnVariable="structData">
+                method="structTextRetrieveByFile" returnVariable="structData">
                 <cfinvokeargument  name="description"  value="#Contents#"> 
                 </cfinvoke>
     
@@ -54,7 +55,6 @@
     
                 <cflocation url="viewpage.cfm?desc='#Contents#">
         </cfif>
-    
     </cfif>
     
     

@@ -9,20 +9,21 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">ADD PAGE</h3>
-
-                    <cfform name="cftask_1" action="action.cfm" method = "post">
+                    <form name="cftask_1" action="../components/taskdefined.cfc?method=createPageDetails" 
+                    method = "post">
                         <div class="form-control">
-                            <cfinput type="text" placeholder="Page name"
+                            <input type="text" placeholder="Page name"
                              name="pageName">
                         </div><br>
                         <div class="form-controls">
-                            <cftextarea rows="5" cols="39" class="texts" 
+                            <textarea rows="5" cols="39" class="texts" 
                             name="pageDescription"  placeholder="Page Description"/>
+                            </textarea>
                         </div><br><br>
                         <div class="form-btn">
-                            <cfinput type="submit" class="btn" name="Submit">
+                            <input type="submit" class="btn" name="Submit">
                         <div>
-                    </cfform>
+                    </form>
                 </div>
             </div>
         </section>

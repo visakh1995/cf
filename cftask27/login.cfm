@@ -11,12 +11,10 @@
                     <h3 class="heading">SIGN IN</h3>
                     <form name="cftask_1" method="post" 
                     action="../components/taskdefined.cfc?method=loginVerified">
-                        <cfif isDefined("errorShower") AND NOT arrayIsEmpty(errorShower)>
+                        <cfif isDefined("aMessages")>
                             <div class="alert">
                                 <cfoutput>
-                                    <cfloop array="#errorShower#" index="errorGets">
-                                        <p>#errorGets#</p>
-                                    </cfloop>
+                                    <p>#aMessages#</p>
                                 </cfoutput>
                             </div>
                         </cfif>
