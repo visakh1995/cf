@@ -5,12 +5,9 @@
     </head>
     <body>
         <cfif structKeyExists(form,'Submit')>
-            <cfinvoke component="components.taskdefined" 
-            method="structureDisplay" returnVariable="Datas"> 
-            <cfinvokeargument  name="key"  value="#form.key#">
-            <cfinvokeargument  name="value"  value="#form.value#">
-            </cfinvoke>
-            <cfdump var =#Datas#>
+            <cfset newInstance = createObject("component","components.taskdefined")> 
+            <cfset find = newInstance.structureDisplay(form.key,form.value)> 
+            <cfdump var = #find#> 
         </cfif>
 
         <section>

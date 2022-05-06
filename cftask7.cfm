@@ -10,12 +10,9 @@
                 <div class="card">
                     <h3 class="heading">CF TASK 7 STRUCTURE</h3>
                     <cfif structKeyExists(form,'Submit')>
-                        <cfinvoke component="components.taskdefined" 
-                        method="structurePreviousFetch" returnVariable="Data"> 
-                        <cfinvokeargument  name="key"  value="#form.key#">
-                        <cfinvokeargument  name="value"  value="#form.value#">
-                        </cfinvoke>
-                        <cfdump var=#Data#>
+                        <cfset newInstance = createObject("component","components.taskdefined")> 
+                        <cfset find = newInstance.structurePreviousFetch(form.key,form.value)> 
+                        <cfdump var = #find#> 
                     </cfif>
                     <form name="cftask_1" method="post" action="">
                         <div class="form-control">

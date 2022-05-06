@@ -6,11 +6,8 @@
     </head>
     <body>
         <cfif structKeyExists(form,'Submit')>
-            <cfinvoke component="components.taskdefined" 
-            method="cfAgeView" returnVariable="Data"> 
-            <cfinvokeargument  name="mDob"  value="#form.mDob#">
-            <cfinvokeargument  name="uDob"  value="#form.uDob#">
-            </cfinvoke>
+            <cfset newInstance = createObject("component","components.taskdefined")> 
+            <cfset res = newInstance.cfAgeView(form.mDob,form.uDob)>
         </cfif>
         <section>
             <div class="main-container">

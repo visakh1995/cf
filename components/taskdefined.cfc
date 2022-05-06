@@ -48,10 +48,9 @@
     </cffunction>
 
     <cffunction name="cfContinue" access="remote">
-        <cfargument name="number" required="true"> 
-        <cfset number = arguments.number/>
+""
         <cfset caseMessages = arrayNew(1)>
-        <cfloop list = #number# index="i" delimiters = ",">
+        <cfloop list = #Arguments# index="i" delimiters = ",">
         <cfif i mod 3>
             <cfcontinue>
         <cfelse>
@@ -132,9 +131,8 @@
         <cfargument name="key" required="true">
         <cfargument name="value" required="true">
         <cfset alertArray = arrayNew(1)>
-        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-        sessionManagement = "Yes">
-
+        <cfset aMessages = "">
+        
         <cfif NOT StructKeyExists(Session,"myStructShow")>
             <cflock timeout="20" scope="Session" type="Exclusive">
                 <cfset Session.myStructShow = structNew()>
@@ -144,14 +142,14 @@
             <cfset alertArray = arrayNew(1)/>
             <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
                 <cfif structKeyExists("#Session.myStructShow#", arguments.key)>
-                    <cfset arrayAppend(alertArray,"#arguments.key# already present,not add again")>
+                    <cfset aMessages = "#arguments.key# already present,not add again">
                 <cfelse>
                     <cfset Session.myStructShow["#arguments.key#"] = "#arguments.value#">
                 </cfif>
             </cfif>
         </cfif>
         <cfdump var=#Session.myStructShow#>
-        <cfreturn alertArray> 
+        <cfreturn aMessages> 
     </cffunction>
 
     <cffunction name="showAlphabeticalStructure" access="remote">

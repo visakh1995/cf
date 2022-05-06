@@ -5,12 +5,9 @@
     </head>
     <body>
         <cfif structKeyExists(form,'Submit')>
-            <cfinvoke component="components.taskdefined" 
-            method="replaceStructure" returnVariable="Data"> 
-            <cfinvokeargument  name="key"  value="#form.key#">
-            <cfinvokeargument  name="value"  value="#form.value#">
-            </cfinvoke>
-            <cfdump var =#Data#>
+            <cfset newInstance = createObject("component","components.taskdefined")> 
+            <cfset find = newInstance.replaceStructure(form.key,form.value)> 
+            <cfdump var = #find#> 
         </cfif>
         <section>
             <div class="main-container">

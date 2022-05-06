@@ -7,10 +7,11 @@
     <body>
         <cfif structKeyExists(form,'Submit')>
             <cfset value = form.number>
-            <cfinvoke component="components.taskdefined" 
+           <cfinvoke component="components.taskdefined" 
             method="cfContinue" returnVariable="Data"> 
             <cfinvokeargument  name="number"  value="#value#">
             </cfinvoke>
+
         </cfif>
         <section>
             <div class="main-container">

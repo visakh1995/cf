@@ -6,24 +6,19 @@
     </head>
     <body>
         <cfif structKeyExists(form,'Submit')>
-            <cfinvoke component="components.taskdefined" 
-            method="showReplaceStructure" returnVariable="alertArray"> 
-            <cfinvokeargument  name="key"  value="#form.key#">
-            <cfinvokeargument  name="value"  value="#form.value#">
-            </cfinvoke>
+            <cfset newInstance = createObject("component","components.taskdefined")> 
+            <cfset aMessages = newInstance.showReplaceStructure(form.key,form.value)> 
         </cfif>
         <section>
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 9 STRUCTURE</h3>
                     <form name="cftask_1" method="post" action="">
-                        <cfif isDefined("alertArray") AND NOT arrayIsEmpty(alertArray)>
-                            <div class="alert">
-                                <cfloop array = #alertArray# index="alerter">
-                                    <cfoutput>
-                                        <p>#alerter#</p>
-                                    </cfoutput>
-                                </cfloop>
+                        <cfif isDefined("aMessages")>
+                            <div class="alert-green">
+                                <cfoutput>
+                                    <p>#aMessages#</p>
+                                </cfoutput>
                             </div>
                         </cfif>
                         <div class="form-control">

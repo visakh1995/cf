@@ -1,3 +1,27 @@
+function onValidateEmail() {
+    $("body").on('change', '#email', function() {
+        var selectedValue = $(this).val();
+            $.ajax({
+            url: 'components/userDefined.cfc',
+            type: 'get',
+            dataType: "json",
+            data: {
+            method: "getUserByEmail",
+            userEmail: selectedValue
+            },
+            success: function (data){
+                if(data == 0){
+                    document.getElementById("buttonChange").disabled = false;
+                }else{
+                    document.getElementById("alerts").innerHTML = "The email id already exist,please try again";
+                }
+            }, 
+            error: function (xhr, textStatus, errorThrown){
+                console.log(xhr);
+            }
+        });
+    });
+}
 function onValidate() {
     var position = document.getElementById("position").value;
     var yes = document.getElementById("yes").value;
@@ -37,3 +61,5 @@ function onValidate() {
     return false;
     }      
 }
+
+

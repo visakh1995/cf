@@ -126,8 +126,9 @@
         <cfargument name="username" type="string">
         <cfargument name="password" type="string">
             <cfquery name="verifiedDetails" datasource="cruddb">
-                SELECT *FROM coldfusiion.login_table WHERE userName = "#username#" AND 
-                password = "#password#"
+                SELECT *FROM coldfusiion.login_table WHERE userName = 
+                <cfqueryparam  value="#arguments.username#"> AND 
+                password = <cfqueryparam  value="#arguments.password#">
             </cfquery>
         <cfif verifiedDetails.RecordCount gt 0>
                 <cfapplication name="login" sessionTimeout="#CreateTimeSpan(0, 0, 0, 60)#"
