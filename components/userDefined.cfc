@@ -23,39 +23,40 @@
         <cfquery name="showData" datasource="cruddb">
             SELECT * FROM coldfusiion.cftask_image
         </cfquery>
-         <cfreturn showData>
+        <cfreturn showData>
     </cffunction>
 
-    <cffunction name ="multipleValueCalc">
+    <cffunction name ="multipleValueCalc" output="true" access="public" 
+        returnType="string">
         <cfargument name ="one" type="string" required="yes">
-         <cfset multipleValue = 1> 
-         <cfloop list = "#one#" index="i">
+        <cfset local.multipleValue = 1> 
+        <cfloop list = "#one#" index="i">
             <cfset multipleValue = multipleValue * i > 
-          </cfloop>
+        </cfloop>
         <cfreturn multipleValue>
     </cffunction>
 
-    <cffunction name ="multipleValueCalcCreateObject">
-        <cfset argCount = ArrayLen(Arguments)> 
-        <cfset multipleValue = 1> 
+    <cffunction name ="multipleValueCalcCreateObject" output="true" access="public"
+        returnType="string">
+        <cfset local.mulVariables = Arguments>
+        <cfset local.argCount = ArrayLen(mulVariables)> 
+        <cfset local.multipleValue = 1> 
         <cfloop from ="1" to = "#argCount#" index="i" step="1">
-            <cfset multipleValue = multipleValue * Arguments[i] >
-          </cfloop>
+            <cfset multipleValue = multipleValue * mulVariables[i] >
+        </cfloop>
         <cfreturn multipleValue>
     </cffunction>
 
-    <cffunction name="print" access="public" >
-        <cfset var i =1>
-        <cfset var j =3>
-        <cfset var n =3>
+    <cffunction name="print" access="public" output="true"  >
+        <cfset local.i =1>
+        <cfset local.j =3>
+        <cfset local.n =3>
         <cfloop from="1" to="3" index="i">              
-        <cfset var k =#i#>
+            <cfset local.k =#i#>
             <cfloop from="1" to="3" index="j">
-            <cfoutput>#k# &nbsp;</cfoutput>
-            <cfset  k= (#k# + #n# )>
-            </cfloop>                   
-            <cfoutput> <br>
-        </cfoutput>
+                <cfoutput>#k# &nbsp;</cfoutput>
+                <cfset  k= (#k# + #n# )>
+            </cfloop><br>
         </cfloop>
     </cffunction>
 

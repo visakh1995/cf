@@ -10,10 +10,10 @@
                 <div class="card">
                     <h3 class="heading">CF TASK 19</h3>
                     <div class="alert">
-                    <cfoutput>#cookie.visitCounter#</cfoutput>
+                        <cfoutput>#cookie.visitCounter#</cfoutput>
                      </div>
                     <form name="cftask_19" method="post" 
-                    action="components/taskdefined.cfc?method=cfCounter">
+                        action="components/taskdefined.cfc?method=cfCounter">
                         <br><br>
                         <div class="form-btn">
                             <input type="submit" class="btn" name="Submit">

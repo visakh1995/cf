@@ -14,9 +14,9 @@
                 <div class="card1">
                     <h3 class="heading">CF TASK 5 AGE</h3>
                     <form name="cftask_1" method="post" action="">
-                        <cfif isDefined("Data") AND NOT arrayIsEmpty(Data)>
+                        <cfif isDefined("res")>
                             <div class="alert">
-                                <cfloop array = #Data# index="alerter">
+                                <cfloop array = #res# index="alerter">
                                     <cfoutput>
                                         <p>#alerter#</p>
                                     </cfoutput>

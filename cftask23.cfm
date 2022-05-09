@@ -24,8 +24,8 @@
                             </div>
                         </cfif>
                         <form name="myForm" method="post" 
-                        enctype="multipart/form-data" 
-                        action="components/taskdefined.cfc?method=createFormDetails">
+                            enctype="multipart/form-data" 
+                            action="components/taskdefined.cfc?method=createFormDetails">
                             <div class="form-control">
                                 <select  
                                 class="fullWidth"

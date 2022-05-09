@@ -23,7 +23,7 @@
                         </div>
                     </cfif>
                     <form name="cftask_1" method = "post"
-                    action="components/taskdefined.cfc?method=insertVerifiedEmailData">
+                        action="components/taskdefined.cfc?method=insertVerifiedEmailData">
                         <div class="form-control">
                             <input type="text" placeholder="Name"
                              name="name">

@@ -8,19 +8,19 @@
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 13 STRING</h3>
-                        <cfif isDefined("Session.myStringStorage")>
-                            <cfloop collection="#Session.myStringStorage#" item="subject">
+                    <cfif isDefined("Session.myStringStorage")>
+                        <cfloop collection="#Session.myStringStorage#" item="subject">
                             <div class="alert-green">
                                 <cfoutput>
                                     <p>#Session.myStringStorage.result#<p/>
                                 </cfoutput>
                             </div>
-                            </cfloop>
-                        </cfif>
+                        </cfloop>
+                    </cfif>
                     <form name="cftask_1" method="post" action="components/taskdefined.cfc?method=cfstringFinding">
                         <div class="form-control">
                             <input type="text" placeholder="Enter the string"
-                             name="stringValue">
+                            name="stringValue">
                         </div><br><br>
                         <div class="form-btn">
                             <input type="submit" class="btn" name="Submit">

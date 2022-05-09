@@ -1,8 +1,8 @@
 <cfcomponent>
 
-    <cffunction name="stringValues"  access="remote">
-        <cfargument name="number" required="true"> 
-        <cfset aMessages = "">
+    <cffunction name="stringValues"  access="remote" output="true">
+        <cfargument name="number" type="integer" required="true"> 
+        <cfset local.aMessages = "">
         <cfif arguments.number EQ ''>
             <cfset aMessages ='The field cant be empty'> 
         <cfelseif arguments.number gt 5>
@@ -18,12 +18,12 @@
         <cfelse>
             <cfset aMessages ='OK'>
         </cfif>
-        <cflocation  url="../cftask1.cfm?aMessages=#aMessages#">
+        <cflocation  url="../cftask1.cfm?aMessages=#local.aMessages#">
     </cffunction>
 
-    <cffunction name="cfCaseValues"  access="remote">
-        <cfargument name="number" required="true"> 
-        <cfset caseMessages = "">
+    <cffunction name="cfCaseValues"  access="remote" output="true">
+        <cfargument name="number" type="integer" required="true"> 
+        <cfset local.caseMessages = "">
         <cfswitch expression = "#arguments.number#">
             <cfcase value = "5">
                 <cfset caseMessages ='VERY GOOD'>
@@ -47,53 +47,55 @@
         <cflocation  url="../cftask2.cfm?aMessages=#caseMessages#">
     </cffunction>
 
-    <cffunction name="cfContinue" access="remote">
-""
-        <cfset caseMessages = arrayNew(1)>
-        <cfloop list = #Arguments# index="i" delimiters = ",">
+    <cffunction name="cfContinue" access="public" output="true" 
+        returnType="array">
+        <cfargument  name="number" type="string" required="true">
+        <cfset local.caseMessages = arrayNew(1)>
+        <cfloop list = #arguments.number# index="i" delimiters = ",">
         <cfif i mod 3>
             <cfcontinue>
         <cfelse>
-            <cfset arrayAppend(caseMessages, i)>
+            <cfset arrayAppend(local.caseMessages, i)>
         </cfif>
         </cfloop>
         <cfreturn caseMessages>
     </cffunction>
 
-    <cffunction  name="cfAgeView" access="remote">
-        <cfargument name="mDob" required="true"> 
-        <cfargument name="uDob" required="true"> 
-        <cfset dateDetails = arrayNew(1)>
+    <cffunction  name="cfAgeView" access="public" output="true"
+        returnType="array">
+        <cfargument name="mDob" type="date" required="true"> 
+        <cfargument name="uDob" type="date" required="true"> 
+        <cfset local.dateDetails = arrayNew(1)>
 
-        <cfset userAge = dateDiff("yyyy",arguments.uDob,Now())>
+        <cfset local.userAge = dateDiff("yyyy",arguments.uDob,Now())>
         <cfset arrayAppend(dateDetails,"User Age is #userAge#")>
 
-        <cfset deliveredDate = dateDiff("yyyy",arguments.uDob,arguments.mDob)>
-        <cfset arrayAppend(dateDetails,"Mother's age at the time of delvery #deliveredDate#")>
+        <cfset local.deliveredDate = dateDiff("yyyy",arguments.uDob,arguments.mDob)>
+        <cfset arrayAppend(dateDetails,"Mother's age at the time of delvery #local.deliveredDate#")>
 
-        <cfset BdayDay = DateFormat(arguments.uDob,"mm/dd/2022")>
-        <cfset BdayMDay = DateFormat(arguments.mDob,"mm/dd/2022")>
+        <cfset local.BdayDay = DateFormat(arguments.uDob,"mm/dd/2022")>
+        <cfset local.BdayMDay = DateFormat(arguments.mDob,"mm/dd/2022")>
 
-        <cfset birthDayRemUser = dateDiff("d",Now(),BdayDay)>
-        <cfset birthDayRemMother = dateDiff("d",Now(),BdayMDay)>
+        <cfset local.birthDayRemUser = dateDiff("d",Now(),BdayDay)>
+        <cfset local.birthDayRemMother = dateDiff("d",Now(),BdayMDay)>
         <cfset arrayAppend(dateDetails,"Days remaining for users birthday is - #birthDayRemUser#")>
         <cfset arrayAppend(dateDetails,"Days remaining for mother birthday is- #birthDayRemMother#")>
         <cfreturn dateDetails>
     </cffunction>
 
-    <cffunction name="structureDisplay" access="remote">
-        <cfargument name="key" required="true">
-        <cfargument name="value" required="true">
-        <cfset structDetails = structNew()/>
-        <cfset keys = StructInsert(structDetails,arguments.key,arguments.value)/>
+    <cffunction name="structureDisplay" access="public" output="true"
+        returnType="struct">
+        <cfargument name="key" type="string" required="true">
+        <cfargument name="value" type="string"required="true">
+        <cfset local.structDetails = structNew()/>
+        <cfset local.keys = StructInsert(structDetails,arguments.key,arguments.value)/>
         <cfreturn structDetails> 
     </cffunction>
 
-    <cffunction name="structurePreviousFetch" access="remote">
-        <cfargument name="key" required="true">
-        <cfargument name="value" required="true">
-        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-        sessionManagement = "Yes">
+    <cffunction name="structurePreviousFetch" access="public" output="true"
+        returnType="struct">
+        <cfargument name="key" type="string" required="true">
+        <cfargument name="value" type="string" required="true">
         <cfif NOT StructKeyExists(Session,"mystruct")>
             <cflock timeout="20" scope="Session" type="Exclusive">
                 <cfset Session.mystruct = structNew()>
@@ -107,12 +109,10 @@
         <cfreturn Session.mystruct> 
     </cffunction>
 
-    <cffunction name="replaceStructure" access="remote">
-        <cfargument name="key" required="true">
-        <cfargument name="value" required="true">
-        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-        sessionManagement = "Yes">
-
+    <cffunction name="replaceStructure" access="public" output="true"
+        returnType="struct">
+        <cfargument name="key" type="string" required="true">
+        <cfargument name="value" type="string" required="true">
         <cfif NOT StructKeyExists(Session,"mystructs")>
         <cflock timeout="20" scope="Session" type="Exclusive">
             <cfset Session.mystructs = structNew()>
@@ -127,11 +127,11 @@
         <cfreturn Session.mystructs> 
     </cffunction>
 
-    <cffunction name="showReplaceStructure" access="remote">
-        <cfargument name="key" required="true">
-        <cfargument name="value" required="true">
-        <cfset alertArray = arrayNew(1)>
-        <cfset aMessages = "">
+    <cffunction name="showReplaceStructure" access="public" output="true"
+        returnType="string">
+        <cfargument name="key" type="string" required="true">
+        <cfargument name="value" type="string" required="true">
+        <cfset local.aMessages = "">
         
         <cfif NOT StructKeyExists(Session,"myStructShow")>
             <cflock timeout="20" scope="Session" type="Exclusive">
@@ -139,7 +139,6 @@
             </cflock>
         </cfif>
         <cfif StructKeyExists(Session,"myStructShow")>
-            <cfset alertArray = arrayNew(1)/>
             <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
                 <cfif structKeyExists("#Session.myStructShow#", arguments.key)>
                     <cfset aMessages = "#arguments.key# already present,not add again">
@@ -152,12 +151,11 @@
         <cfreturn aMessages> 
     </cffunction>
 
-    <cffunction name="showAlphabeticalStructure" access="remote">
-        <cfargument name="key" required="true">
-        <cfargument name="value" required="true">
+    <cffunction name="showAlphabeticalStructure" access="public" output="true"
+        returnType="array">
+        <cfargument name="key" type="string" required="true">
+        <cfargument name="value" type="string" required="true">
         <cfset alertArray = arrayNew(1)>
-        <cfapplication name="structure" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-        sessionManagement = "Yes">
 
         <cfif NOT StructKeyExists(Session,"myStructAlph")>
             <cflock timeout="20" scope="Session" type="Exclusive">
@@ -165,7 +163,6 @@
             </cflock>
         </cfif>
         <cfif StructKeyExists(Session,"myStructAlph")>
-            <cfset alertArray = arrayNew(1)/>
             <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
                 <cfif structKeyExists("#Session.myStructAlph#",arguments.key)>
                     <cfset arrayAppend(alertArray,"#arguments.key# already present,not add again")>
@@ -194,23 +191,25 @@
         <cfset arrayAppend(arrayShown,"first Name of #rowNumber# is #que.firstName#")>
         <cfset arrayAppend(arrayShown,"Last Name of #rowNumber# is #que.lastName#")>
         </cfif>
-        <cfreturn >
+        <cfreturn>
     </cffunction>
 
-    <cffunction name ="multipled" returnType="string">
-        <cfset argCount = ArrayLen(Arguments)>
+    <cffunction name ="multipled" access="public" returnType="string" output="true">
+        <cfset local.mulVariables = Arguments>
+        <cfset argCount = ArrayLen(mulVariables)>
         <cfset multipleValue = 1>
         <cfloop from ="1" to = "#argCount#" index="i" step="1">
-            <cfset multipleValue = multipleValue * Arguments[i] >
+            <cfset multipleValue = multipleValue * mulVariables[i] >
         </cfloop>
         <cfreturn multipleValue>
     </cffunction>
 
-    <cffunction  name="cfstringFinding" access="remote">
-        <cfargument name="stringValue" required="true">
-        <cfset orginal = "the quick brown fox jumps over the lazy dog">
-        <cfset totsCount = listValueCountNoCase("the quick brown fox jumps over the lazy dog", arguments.stringValue," ") />
-        <cfset display ="Result as found,the key value '#arguments.stringValue#' 
+    <cffunction  name="cfstringFinding" access="remote" output="true">
+        <cfargument name="stringValue" type="string" required="true">
+        <cfset local.orginal = "the quick brown fox jumps over the lazy dog">
+        <cfset local.totsCount = listValueCountNoCase("the quick brown fox jumps over the lazy dog",
+        arguments.stringValue," ") />
+        <cfset local.display ="Result as found,the key value '#arguments.stringValue#' 
         in #totsCount# times - the quick brown fox jumps over the lazy dog." />
 
         <cfif NOT StructKeyExists(Session,"myStringStorage")>
@@ -227,7 +226,7 @@
         <cflocation  url="../cftask13.cfm">
     </cffunction>
 
-    <cffunction  name="imageProcess" access="remote">
+    <cffunction  name="imageProcess" access="remote" output="true">
         <cfargument name="name" required="true">
         <cfargument name="description" required="true">
         <cfargument name="image" required="true">
@@ -241,18 +240,18 @@
             destination="#thisDir#">
         
             <cfif fileUpload.fileWasSaved>
-                <cfset path = fileupload.serverdirectory & "\" & fileupload.serverfile>
+                <cfset local.path = fileupload.serverdirectory & "\" & fileupload.serverfile>
                 <cfif NOT isImageFile(path)> 
-                    <cfset errors = "Invalid Image!<br />"> 
+                    <cfset local.errors = "Invalid Image!<br />"> 
                     <cffile action="delete" file="#path#">
 
                     <cfelseif fileupload.filesize gt 1000000>
-                        <cfset aMessages = "File size is greater tah 1 mb,please try again">                       
+                        <cfset local.aMessages = "File size is greater tah 1 mb,please try again">                       
                         <cflocation url="../cftask14.cfm?aMessages=#aMessages#"> 
                     <cfelse>
                         <cfimage action="read" source = "../uploads/#fileUpload.serverfile#" name = "myImage">
                         <cfset ImageScaleToFit(myImage,75,75,"bilinear")>
-                        <cfset newImageName = fileUpload.serverDirectory & "/" &
+                        <cfset local.newImageName = fileUpload.serverDirectory & "/" &
                             fileUpload.serverFilename & "_thumbnail." &
                             fileUpload.serverFileExt>            
                     <cfimage source ="#myImage#" action="write"
@@ -281,8 +280,8 @@
         
     </cffunction>
 
-    <cffunction  name="oddEvenFinding" access="remote">
-        <cfargument  name="number" required="true">
+    <cffunction  name="oddEvenFinding" access="remote" output="true">
+        <cfargument name="number" type="integer" required="true">
 
         <cfif NOT StructKeyExists(Session,"myIntegerStorage")>
         <cflock timeout="20" scope="Session" type="Exclusive">
@@ -300,9 +299,9 @@
         <cflocation  url="../cftask17.cfm">
     </cffunction>
 
-    <cffunction  name="cfdbFetch" access="remote">
+    <cffunction  name="cfdbFetch" access="remote" output="true">
         <cfargument  name="rowNumber" required="true">
-        <cfset aDBMessages = "">
+        <cfset local.aDBMessages = "">
 
         <cfif arguments.rowNumber gt 10>
             <cfset aDBMessages = "Please provide value less than 10">
@@ -318,32 +317,31 @@
 
             <cfif StructKeyExists(Session,"myStorage")>
                 <cfset arrayAppend(Session.myStorage, listOuts)>
-            </cfif>             
-
+            </cfif>    
+     
             <cfset que = QueryGetRow(listOuts,rowNumber)/>
             <cfset aDBMessages = "first Name of #arguments.rowNumber# is #que.firstName# And
             Last Name of #arguments.rowNumber# is #que.lastName#">
             <cflocation  url="../cftask12.cfm?aMessages=#aDBMessages#"> 
-
         </cfif>
     </cffunction>
 
-    <cffunction  name="cfCounter" access="remote">
+    <cffunction  name="cfCounter" access="remote" output="true">
         <cfif IsDefined("cookie.visitCounter") is FALSE>
             <cfcookie  name="visitCounter" expires="never" value="1">
         </cfif>
         <cfif IsDefined("cookie.visitCounter") is TRUE>
-            <cfset visitCounter = "#cookie.visitCounter#">
+            <cfset local.visitCounter = "#cookie.visitCounter#">
             <cfcookie  name="visitCounter" expires="never" value="#IncrementValue(visitCounter)#">
         </cfif>
         <cflocation  url="../cftask19.cfm">
     </cffunction>
 
-    <cffunction name="cfCaptcha" access="remote">
-        <cfargument  name="email" required="true">
-        <cfargument  name="enteredValue" required="true">
-        <cfargument  name="captchaHashed" required="true">
-        <cfset aCaptchaMessages = "">
+    <cffunction name="cfCaptcha" access="remote" output="true">
+        <cfargument  name="email" type="email" required="true">
+        <cfargument  name="enteredValue" type="string" required="true">
+        <cfargument  name="captchaHashed" type="string" required="true">
+        <cfset local.aCaptchaMessages = "">
 
         <cfif NOT StructKeyExists(Session,"aCaptchaMessages") >
             <cflock timeout="20" scope="Session" type="Exclusive">
@@ -355,9 +353,9 @@
         <cfparam name="arguments.enteredValue" default="">
         <cfparam name="arguments.captchaHashed" default="">
 
-        <cfset email = arguments.email>
-        <cfset enteredValue = arguments.enteredValue>
-        <cfset captchaHashed = arguments.captchaHashed>
+        <cfset local.email = arguments.email>
+        <cfset local.enteredValue = arguments.enteredValue>
+        <cfset local.captchaHashed = arguments.captchaHashed>
 
         <cfif hash(ucase(enteredValue)) neq captchaHashed>
             <cfset aCaptchaMessages = "You did not enter the right text.Please try again">
@@ -369,15 +367,15 @@
         <cflocation  url="../cftask20.cfm?aMessages=#aCaptchaMessages#">        
     </cffunction>
 
-    <cffunction name="cfBirthdayWish" access="remote">
+    <cffunction name="cfBirthdayWish" access="remote" output="true">
 
-        <cfargument  name="babayName">
-        <cfargument  name="email" required="true">
-        <cfargument  name="description" required="true">
-        <cfargument  name="image" required="true">
+        <cfargument  name="babayName" type="string">
+        <cfargument  name="email" type="email" required="true">
+        <cfargument  name="description" type="string" required="true">
+        <cfargument  name="image" type="string" required="true">
         <cfset thisDir = expandPath("..\uploads\")>
 
-        <cfset aBirthdayMessages = "">
+        <cfset local.aBirthdayMessages = "">
 
         <cfif len(trim(arguments.image))>
             <cffile action="upload" fileField="image"
@@ -386,8 +384,8 @@
             <cfif fileUpload.fileWasSaved>
                 <cfmail
                 from="Sender@Company.com"
-                to="#email#"
-                subject="#description#"
+                to="#arguments.email#"
+                subject="#arguments.description#"
                 type="html">
                 <!---<p><img src="#thisDir#/#image# width="350" height="261" alt="" /><br /></p> --->
                 </cfmail>
@@ -404,23 +402,23 @@
         <cfreturn listOuts>
     </cffunction>
 
-    <cffunction name="createFormDetails" access="remote">
-        <cfargument name="position" required="true">
-        <cfargument name="checks" required="true">
-        <cfargument name="startDate" required="true">
-        <cfargument name="websiteName" required="true">
-        <cfargument name="salary" required="true">
-        <cfargument name="firstName" required="true">
-        <cfargument name="lastName" required="true">
-        <cfargument name="email" required="true">
-        <cfargument name="phone" required="true">
+    <cffunction name="createFormDetails" access="remote" output="true">
+        <cfargument name="position" type="string" required="true">
+        <cfargument name="checks" type="string" required="true">
+        <cfargument name="startDate" type="string" required="true">
+        <cfargument name="websiteName" type="string" required="true">
+        <cfargument name="salary" type="string" required="true">
+        <cfargument name="firstName" type="string" required="true">
+        <cfargument name="lastName" type="string" required="true">
+        <cfargument name="email" type="string" required="true">
+        <cfargument name="phone" type="string" required="true">
         
         <cffile action="upload"
         fileField="resume"
         nameconflict="overwrite"
         destination="C:\coldFusion2021\cfusion\wwwroot\test\uploads\">
 
-        <cfset imageValue = #cffile.serverFile#> 
+        <cfset local.imageValue = #cffile.serverFile#> 
         <cfquery name="addData" result = result  datasource="cruddb">
             INSERT INTO coldfusiion.form_info (position,relocate,startDate,website,resumePath,salary,firstName,
             lastName,email,phone)
@@ -438,25 +436,25 @@
                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">            
                )
        </cfquery>
-       <cfset message  ="Application submitted successfully">
+       <cfset local.message  ="Application submitted successfully">
        <cflocation  url="../cftask23.cfm?aMessages=#message#">        
    </cffunction>
 
-    <cffunction name="insertVerifiedEmailData" access="remote">
-        <cfargument name="name" required="true">
-        <cfargument name="email" required="true">
+    <cffunction name="insertVerifiedEmailData" access="remote" output="true">
+        <cfargument name="name" type="string" required="true">
+        <cfargument name="email" type="email" required="true">
         <cfquery name="insertValues" datasource="cruddb">
             INSERT INTO coldfusiion.verify_table (fullName,email) VALUES(
                 <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.name#">,
                 <cfqueryparam CFSQLType="cf_sql_varchar" value="#arguments.email#">
             )
         </cfquery>
-       <cfset message  ="Email verified and data submitted successfully...">
+       <cfset local.message  ="Email verified and data submitted successfully...">
        <cflocation  url="../cftask24.cfm?aMessages=#message#">  
     </cffunction>
 
     <cffunction  name="loginVerified" access="remote">
-        <cfargument name="username" required="true">
+        <cfargument name="username" type="string" required="true">
         <cfargument name="password" required="true">
         <cfset encodedPassword = hash("#Password#", "SHA-256", "UTF-8")>
         <cfset message  ="">

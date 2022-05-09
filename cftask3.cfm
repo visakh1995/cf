@@ -6,21 +6,17 @@
     </head>
     <body>
         <cfif structKeyExists(form,'Submit')>
-            <cfset value = form.number>
-           <cfinvoke component="components.taskdefined" 
-            method="cfContinue" returnVariable="Data"> 
-            <cfinvokeargument  name="number"  value="#value#">
-            </cfinvoke>
-
+            <cfset newInstance = createObject("component","components.taskdefined")> 
+            <cfset res = newInstance.cfContinue(form.number)>
         </cfif>
         <section>
             <div class="main-container">
                 <div class="card">
                     <h3 class="heading">CF TASK 3 CFCONTINUE</h3>
                     <form name="cftask_1" method="post" action="">
-                        <cfif isDefined("Data") AND NOT arrayIsEmpty(Data)>
+                        <cfif isDefined("res") AND NOT arrayIsEmpty(res)>
                             <div class="alert">
-                                <cfloop array = #Data# index="alerter">
+                                <cfloop array = #res# index="alerter">
                                     <cfoutput>
                                         #alerter#,
                                     </cfoutput>
