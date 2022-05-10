@@ -173,3 +173,22 @@
                         </cfif>
                         <div>
                     </div>
+
+
+                    29line----12th task
+                    <div class="next">
+                        <table cellpadding = "5" cellspacing="7">
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                            </tr>
+                            <cfloop array = "#Session.myStorage#"  index="stored">
+                                <cfoutput>
+                                    <tr>
+                                        <td>#stored.firstName#</td>
+                                        <td>#stored.lastName#</td>
+                                    </tr>
+                                </cfoutput>
+                            </cfloop>
+                        </table>
+                    <div>

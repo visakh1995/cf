@@ -5,9 +5,10 @@
     </head>
     <body>
         <cfif structKeyExists(form,'Submit')>
+            <!--- <cfset structureFn = application.structureCall> --->
             <cfset newInstance = createObject("component","components.taskdefined")> 
             <cfset find = newInstance.structureDisplay(form.key,form.value)> 
-            <cfdump var = #find#> 
+            <cfdump var = #structureFn#> 
         </cfif>
 
         <section>

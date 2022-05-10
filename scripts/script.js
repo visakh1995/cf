@@ -61,5 +61,16 @@ function onValidate() {
     return false;
     }      
 }
+function showErrorMessage() {
+    var value = document.getElementById("enteredValue").value;
+    if(isNaN(value)){
+        event.preventDefault();
+        document.getElementById("alert").innerHTML ="Please enter Numeric value";
+    }else{
+        return;
+        document.getElementById("alert").innerHTML ="okay";
+    }
+}
+
 
 

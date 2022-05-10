@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/style.css" type="text/css">
+        <script src="./scripts/script.js"></script>
         <title>CF TASKS</title>
     </head>
     <body>
@@ -19,7 +20,8 @@
                             onError="showErrorMessage">
                         </div><br><br>
                         <div class="form-btn">
-                            <input type="submit" class="btn" name="Submit" onclick = showErrorMessage()>
+                            <input type="submit" class="btn" name="Submit" 
+                            onclick ="return showErrorMessage()">
                         <div>
                     </form>
           
@@ -40,18 +42,4 @@
             </div>
         </section>
     </body>
-    <script>
-    function showErrorMessage() {
-        var value = document.getElementById("enteredValue").value;
-        if(isNaN(value)){
-            event.preventDefault();
-            document.getElementById("alert").innerHTML ="Please enter Numeric value";
-        }else{
-            return;
-            document.getElementById("alert").innerHTML ="okay";
-        }
-    }
-    </script>
-   
-    
 </html>

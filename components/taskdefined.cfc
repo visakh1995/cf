@@ -453,15 +453,16 @@
        <cflocation  url="../cftask24.cfm?aMessages=#message#">  
     </cffunction>
 
-    <cffunction  name="loginVerified" access="remote">
+    <cffunction  name="loginVerified" access="remote" output="true">
         <cfargument name="username" type="string" required="true">
-        <cfargument name="password" required="true">
+        <cfargument name="password" type="string" required="true">
         <cfset encodedPassword = hash("#Password#", "SHA-256", "UTF-8")>
-        <cfset message  ="">
+        <cfset local.message  ="">
 
-        <cfquery name="verifiedDetails" datasource="cruddb">
-            SELECT *FROM coldfusiion.login_table WHERE userName = "#arguments.username#" AND 
-            password = "#arguments.password#"
+        <cfquery name="verifiedDetails">
+            SELECT *FROM coldfusiion.login_table WHERE 
+            userName = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.username#"> AND 
+            password = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.password#">
         </cfquery>
 
         <cfif verifiedDetails.RecordCount gt 0>
@@ -482,14 +483,16 @@
         </cfif>
     </cffunction>
     
-    <cffunction name="CMSverifyCredentials" access="remote">
-        <cfargument name="username" type="string">
-        <cfargument name="password" type="string">
-            <cfquery name="verifiedCMSDetails" datasource="cruddb">
-                SELECT *FROM coldfusiion.cms_user WHERE userName = "#username#" AND 
-                password = "#password#"
+    <cffunction name="CMSverifyCredentials" access="remote" output="true">
+        <cfargument name="username" type="string" required="true">
+        <cfargument name="password" type="string" required="true">
+            <cfquery name="verifiedCMSDetails">
+                SELECT *FROM coldfusiion.cms_user WHERE 
+                userName = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.username#">
+                AND 
+                password = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.password#">
             </cfquery>
-            <cfset messages ="">
+            <cfset local.messages = "">
         <cfif verifiedCMSDetails.RecordCount gt 0>
             <cflogin>
                 <cfloginuser  name="#verifiedCMSDetails.userName#" 
@@ -518,12 +521,12 @@
         </cfif>
     </cffunction>
 
-    <cffunction name="updatePageDetails" access="remote">
-        <cfargument name="pageId" type="string">
-        <cfargument name="pageName" type="string">
-        <cfargument name="pageDescription" type="string">
+    <cffunction name="updatePageDetails" access="remote" output="true">
+        <cfargument name="pageId" type="string" required="true">
+        <cfargument name="pageName" type="string" required="true">
+        <cfargument name="pageDescription" type="string" required="true">
 
-        <cfquery name="updateData" datasource="cruddb">
+        <cfquery name="updateData">
            UPDATE coldfusiion.cms_page SET 
            pageName = <cfqueryparam CFSQLType = "cf_sql_varchar" value="#arguments.pageName#">,
            pageDescription  = <cfqueryparam  CFSQLType = "cf_sql_varchar" value="#arguments.pageDescription#">
@@ -532,18 +535,19 @@
         <cflocation url="../cftask28/welcomePage.cfm" >
     </cffunction>
 
-    <cffunction name="deleteCmsPageDetails" access="remote">
-        <cfargument name="deleteId" required="yes">
-        <cfquery name="deleteData" datasource="cruddb">
-            DELETE FROM coldfusiion.cms_page WHERE pageId = "#deleteId#"
+    <cffunction name="deleteCmsPageDetails" access="remote" output="true">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="deleteData">
+            DELETE FROM coldfusiion.cms_page WHERE 
+            pageId = <cfqueryparam  CFSQLType = "cf_sql_varchar" value="#arguments.deleteId#">
         </cfquery>
         <cflocation  url="../cftask28/welcomePage.cfm">
     </cffunction>
 
-    <cffunction name="createPageDetails" access="remote">
-        <cfargument name="pageName" type="string">
-        <cfargument name="pageDescription" type="string">
-        <cfquery name="addData" result = result  datasource="cruddb">
+    <cffunction name="createPageDetails" access="remote" output="true">
+        <cfargument name="pageName" type="string" required="true">
+        <cfargument name="pageDescription" type="string" required="true">
+        <cfquery name="addData" result = result>
             INSERT INTO coldfusiion.cms_page (pageName,pageDescription)
             VALUES(
             <cfqueryparam CFSQLType = "cf_sql_varchar" value="#arguments.pageName#">,
@@ -553,13 +557,13 @@
         <cflocation url="../cftask28/welcomePage.cfm" > 
     </cffunction>
 
-    <cffunction name="loggedOut" access="remote">
+    <cffunction name="loggedOut" access="remote" output="true">
         <cfset StructDelete(Session, "Credentials")>
         <cflocation  url="../cftask28/login.cfm">
     </cffunction>
 
-    <cffunction name="structTextRetriever" access="remote">
-        <cfargument  name="description" type="string" required="yes">
+    <cffunction name="structTextRetriever" access="remote" output="true">
+        <cfargument  name="description" type="string" required="true">
         <cfset mySentence = structNew()>
         <cfset insertions =StructInsert(mySentence,"sentence","#arguments.description#")>
         <cfset data = structKeyList(mySentence)>
@@ -568,13 +572,13 @@
                 INSERT INTO coldfusiion.words_table(sentence)
                 VALUES(
                 <cfqueryparam value="#i#">
-                 )
+                )
             </cfquery>
         </cfloop>
         <cflocation url="../cftask25/showPage.cfm?desc='#arguments.description#">
     </cffunction>
 
-    <cffunction  name="structTextRetrieveByFile" access="remote">
+    <cffunction  name="structTextRetrieveByFile" access="remote" output="true">
         <cfset thisDir = expandPath("./uploads")>
         <cfif len(trim(form.doc_file)) >
             <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
@@ -593,16 +597,15 @@
                     <cfelse>
                         <cfset mySentence[i] = 1>
                     </cfif>
-                </cfloop >
-    
-                <cfset skeys = structKeyList(mySentence)>
-                <cfloop list="#skeys#" index="i">
-                    <cfquery name="word" datasource="cruddb">
-                    INSERT INTO coldfusiion.read_count(sentence) VALUES('#i#' )
-                    </cfquery>
                 </cfloop>
     
-                <cflocation url="../cftask26/viewpage.cfm?desc='#Contents#">
+            <cfset skeys = structKeyList(mySentence)>
+            <cfloop list="#skeys#" index="i">
+                <cfquery name="word" datasource="cruddb">
+                    INSERT INTO coldfusiion.read_count(sentence) VALUES('#i#' )
+                </cfquery>
+            </cfloop>
+            <cflocation url="../cftask26/viewpage.cfm?desc='#Contents#">
         </cfif>
     </cffunction>
     <cffunction  name="showDetailsByID" access="remote">
