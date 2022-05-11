@@ -15,7 +15,7 @@
                     <h3 class="heading">CF TASK 9 STRUCTURE</h3>
                     <form name="cftask_1" method="post" action="">
                         <cfif isDefined("aMessages")>
-                            <div class="alert-green">
+                            <div class="alerts">
                                 <cfoutput>
                                     <p>#aMessages#</p>
                                 </cfoutput>

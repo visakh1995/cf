@@ -4,19 +4,19 @@
         <cfargument name="number" type="integer" required="true"> 
         <cfset local.aMessages = "">
         <cfif arguments.number EQ ''>
-            <cfset aMessages ='The field cant be empty'> 
+            <cfset local.aMessages ='The field cant be empty'> 
         <cfelseif arguments.number gt 5>
-            <cfset aMessages ='The number must between 1 and 5'>
+            <cfset local.aMessages ='The number must between 1 and 5'>
         <cfelseif arguments.number lt 1>
-            <cfset aMessages ='The number must between 1 and 5'>
+            <cfset local.aMessages ='The number must between 1 and 5'>
         <cfelseif arguments.number EQ '5'>
-            <cfset aMessages ='VERY GOOD'>
+            <cfset local.aMessages ='VERY GOOD'>
         <cfelseif arguments.number EQ '4'>
-            <cfset aMessages ='GOOD'>
+            <cfset local.aMessages ='GOOD'>
         <cfelseif arguments.number EQ '3'>
-            <cfset aMessages ='FAIR'>
+            <cfset local.aMessages ='FAIR'>
         <cfelse>
-            <cfset aMessages ='OK'>
+            <cfset local.aMessages ='OK'>
         </cfif>
         <cflocation  url="../cftask1.cfm?aMessages=#local.aMessages#">
     </cffunction>
@@ -26,25 +26,25 @@
         <cfset local.caseMessages = "">
         <cfswitch expression = "#arguments.number#">
             <cfcase value = "5">
-                <cfset caseMessages ='VERY GOOD'>
+                <cfset local.caseMessages ='VERY GOOD'>
             </cfcase>
             <cfcase value = "4">
-                <cfset caseMessages ='GOOD'>
+                <cfset local.caseMessages ='GOOD'>
             </cfcase>
             <cfcase value ="3">
-                <cfset caseMessages ='FAIR'>
+                <cfset local.caseMessages ='FAIR'>
             </cfcase>
             <cfcase value ="2">
-                <cfset caseMessages ='OK'>
+                <cfset local.caseMessages ='OK'>
             </cfcase>
             <cfcase value ="1">
-                <cfset caseMessages ='OK'>
+                <cfset local.caseMessages ='OK'>
             </cfcase>
             <cfdefaultcase>
-                <cfset caseMessages ='The value must be in bw 1 and 5'>
+                <cfset local.caseMessages ='The value must be in bw 1 and 5'>
             </cfdefaultcase>
         </cfswitch>
-        <cflocation  url="../cftask2.cfm?aMessages=#caseMessages#">
+        <cflocation  url="../cftask2.cfm?aMessages=#local.caseMessages#">
     </cffunction>
 
     <cffunction name="cfContinue" access="public" output="true" 
@@ -58,7 +58,7 @@
             <cfset arrayAppend(local.caseMessages, i)>
         </cfif>
         </cfloop>
-        <cfreturn caseMessages>
+        <cfreturn local.caseMessages>
     </cffunction>
 
     <cffunction  name="cfAgeView" access="public" output="true"
@@ -68,19 +68,19 @@
         <cfset local.dateDetails = arrayNew(1)>
 
         <cfset local.userAge = dateDiff("yyyy",arguments.uDob,Now())>
-        <cfset arrayAppend(dateDetails,"User Age is #userAge#")>
+        <cfset arrayAppend(local.dateDetails,"User Age is #userAge#")>
 
         <cfset local.deliveredDate = dateDiff("yyyy",arguments.uDob,arguments.mDob)>
-        <cfset arrayAppend(dateDetails,"Mother's age at the time of delvery #local.deliveredDate#")>
+        <cfset arrayAppend(local.dateDetails,"Mother's age at the time of delvery #local.deliveredDate#")>
 
         <cfset local.BdayDay = DateFormat(arguments.uDob,"mm/dd/2022")>
         <cfset local.BdayMDay = DateFormat(arguments.mDob,"mm/dd/2022")>
 
-        <cfset local.birthDayRemUser = dateDiff("d",Now(),BdayDay)>
-        <cfset local.birthDayRemMother = dateDiff("d",Now(),BdayMDay)>
-        <cfset arrayAppend(dateDetails,"Days remaining for users birthday is - #birthDayRemUser#")>
-        <cfset arrayAppend(dateDetails,"Days remaining for mother birthday is- #birthDayRemMother#")>
-        <cfreturn dateDetails>
+        <cfset local.birthDayRemUser = dateDiff("d",Now(),local.BdayDay)>
+        <cfset local.birthDayRemMother = dateDiff("d",Now(),local.BdayMDay)>
+        <cfset arrayAppend(local.dateDetails,"Days remaining for users birthday is - #local.birthDayRemUser#")>
+        <cfset arrayAppend(local.dateDetails,"Days remaining for mother birthday is- #local.birthDayRemMother#")>
+        <cfreturn local.dateDetails>
     </cffunction>
 
     <cffunction name="structureDisplay" access="public" output="true"
@@ -89,7 +89,7 @@
         <cfargument name="value" type="string"required="true">
         <cfset local.structDetails = structNew()/>
         <cfset local.keys = StructInsert(structDetails,arguments.key,arguments.value)/>
-        <cfreturn structDetails> 
+        <cfreturn local.structDetails> 
     </cffunction>
 
     <cffunction name="structurePreviousFetch" access="public" output="true"
@@ -141,21 +141,21 @@
         <cfif StructKeyExists(Session,"myStructShow")>
             <cfif IsDefined("arguments.key") AND isDefined("arguments.value")>
                 <cfif structKeyExists("#Session.myStructShow#", arguments.key)>
-                    <cfset aMessages = "#arguments.key# already present,not add again">
+                    <cfset local.aMessages = "#arguments.key# already present,not add again">
                 <cfelse>
                     <cfset Session.myStructShow["#arguments.key#"] = "#arguments.value#">
                 </cfif>
             </cfif>
         </cfif>
         <cfdump var=#Session.myStructShow#>
-        <cfreturn aMessages> 
+        <cfreturn local.aMessages> 
     </cffunction>
 
     <cffunction name="showAlphabeticalStructure" access="public" output="true"
         returnType="array">
         <cfargument name="key" type="string" required="true">
         <cfargument name="value" type="string" required="true">
-        <cfset alertArray = arrayNew(1)>
+        <cfset local.alertArray = arrayNew(1)>
 
         <cfif NOT StructKeyExists(Session,"myStructAlph")>
             <cflock timeout="20" scope="Session" type="Exclusive">
@@ -174,12 +174,12 @@
             </cfif>
         </cfif>
         <cfdump var=#Session.myStructAlph#> 
-        <cfreturn alertArray>
+        <cfreturn local.alertArray>
     </cffunction>
 
     <cffunction name="listOutDataByNumber" access="remote">
         <cfargument name="rowNumber" required="true">
-        <cfset arrayShown = arrayNew(1)>
+        <cfset local.arrayShown = arrayNew(1)>
         <cfif rowNumber gt 10>
             <cfset arrayAppend(arrayShown,'Please provide value less than 10')/>
         <cfelse>
@@ -196,12 +196,12 @@
 
     <cffunction name ="multipled" access="public" returnType="string" output="true">
         <cfset local.mulVariables = Arguments>
-        <cfset argCount = ArrayLen(mulVariables)>
-        <cfset multipleValue = 1>
-        <cfloop from ="1" to = "#argCount#" index="i" step="1">
-            <cfset multipleValue = multipleValue * mulVariables[i] >
+        <cfset local.argCount = ArrayLen(mulVariables)>
+        <cfset local.multipleValue = 1>
+        <cfloop from ="1" to = "#local.argCount#" index="i" step="1">
+            <cfset local.multipleValue = multipleValue * mulVariables[i] >
         </cfloop>
-        <cfreturn multipleValue>
+        <cfreturn local.multipleValue>
     </cffunction>
 
     <cffunction  name="cfstringFinding" access="remote" output="true">
@@ -210,7 +210,7 @@
         <cfset local.totsCount = listValueCountNoCase("the quick brown fox jumps over the lazy dog",
         arguments.stringValue," ") />
         <cfset local.display ="Result as found,the key value '#arguments.stringValue#' 
-        in #totsCount# times - the quick brown fox jumps over the lazy dog." />
+        in #local.totsCount# times - the quick brown fox jumps over the lazy dog." />
 
         <cfif NOT StructKeyExists(Session,"myStringStorage")>
         <cflock timeout="20" scope="Session" type="Exclusive">
@@ -231,8 +231,8 @@
         <cfargument name="description" required="true">
         <cfargument name="image" required="true">
         <cfset thisDir = expandPath("..\uploads\")>
-        <cfset imageArray = arrayNew(1)>
-        <cfset aMessages = "">
+        <cfset local.imageArray = arrayNew(1)>
+        <cfset local.aMessages = "">
 
         <cfif len(trim(arguments.image))>
             <cffile action="upload" fileField="image"
@@ -304,7 +304,7 @@
         <cfset local.aDBMessages = "">
 
         <cfif arguments.rowNumber gt 10>
-            <cfset aDBMessages = "Please provide value less than 10">
+            <cfset local.aDBMessages = "Please provide value less than 10">
         <cfelse>
             <cfquery name="listOuts" datasource = "cruddb">
                 SELECT * FROM coldfusiion.cftasks
@@ -320,7 +320,7 @@
             </cfif>    
      
             <cfset que = QueryGetRow(listOuts,rowNumber)/>
-            <cfset aDBMessages = "first Name of #arguments.rowNumber# is #que.firstName# And
+            <cfset local.aDBMessages = "first Name of #arguments.rowNumber# is #que.firstName# And
             Last Name of #arguments.rowNumber# is #que.lastName#">
             <cflocation  url="../cftask12.cfm?aMessages=#aDBMessages#"> 
         </cfif>
@@ -332,7 +332,7 @@
         </cfif>
         <cfif IsDefined("cookie.visitCounter") is TRUE>
             <cfset local.visitCounter = "#cookie.visitCounter#">
-            <cfcookie  name="visitCounter" expires="never" value="#IncrementValue(visitCounter)#">
+            <cfcookie  name="visitCounter" expires="never" value="#IncrementValue(local.visitCounter)#">
         </cfif>
         <cflocation  url="../cftask19.cfm">
     </cffunction>
@@ -358,13 +358,13 @@
         <cfset local.captchaHashed = arguments.captchaHashed>
 
         <cfif hash(ucase(enteredValue)) neq captchaHashed>
-            <cfset aCaptchaMessages = "You did not enter the right text.Please try again">
+            <cfset local.aCaptchaMessages = "You did not enter the right text.Please try again">
         <cfelseif email EQ '' OR NOT isValid("email",email)>
-            <cfset aCaptchaMessages = "Please provide valid email">
+            <cfset local.aCaptchaMessages = "Please provide valid email">
         <cfelse>
-            <cfset aCaptchaMessages = "Email Address successfully subscribed our newsletter">
+            <cfset local.aCaptchaMessages = "Email Address successfully subscribed our newsletter">
         </cfif>
-        <cflocation  url="../cftask20.cfm?aMessages=#aCaptchaMessages#">        
+        <cflocation  url="../cftask20.cfm?aMessages=#local.aCaptchaMessages#">        
     </cffunction>
 
     <cffunction name="cfBirthdayWish" access="remote" output="true">
@@ -389,10 +389,10 @@
                 type="html">
                 <!---<p><img src="#thisDir#/#image# width="350" height="261" alt="" /><br /></p> --->
                 </cfmail>
-                <cfset aBirthdayMessages = "File uploaded and mail forwarded successfully">
+                <cfset local.aBirthdayMessages = "File uploaded and mail forwarded successfully">
             </cfif>
         </cfif>
-        <cflocation  url="../cftask21.cfm?aMessages=#aBirthdayMessages#">        
+        <cflocation  url="../cftask21.cfm?aMessages=#local.aBirthdayMessages#">        
     </cffunction>
     
     <cffunction  name="listOutData" access="remote">
@@ -437,7 +437,7 @@
                )
        </cfquery>
        <cfset local.message  ="Application submitted successfully">
-       <cflocation  url="../cftask23.cfm?aMessages=#message#">        
+       <cflocation  url="../cftask23.cfm?aMessages=#local.message#">        
    </cffunction>
 
     <cffunction name="insertVerifiedEmailData" access="remote" output="true">
@@ -450,7 +450,7 @@
             )
         </cfquery>
        <cfset local.message  ="Email verified and data submitted successfully...">
-       <cflocation  url="../cftask24.cfm?aMessages=#message#">  
+       <cflocation  url="../cftask24.cfm?aMessages=#local.message#">  
     </cffunction>
 
     <cffunction  name="loginVerified" access="remote" output="true">
@@ -478,8 +478,8 @@
             </cfif>
             <cflocation  url="../cftask27/welcomePage.cfm"> 
         <cfelse>
-            <cfset message  ="Invalid username or password">
-            <cflocation  url="../cftask27/login.cfm?aMessages=#message#">  
+            <cfset local.message  ="Invalid username or password">
+            <cflocation  url="../cftask27/login.cfm?aMessages=#local.message#">  
         </cfif>
     </cffunction>
     
@@ -516,8 +516,8 @@
                     <cflocation  url="../cftask28/welcomePage.cfm">                  
                 </cfif>
         <cfelse>
-            <cfset message  ="Invalid username or password,please try again...">
-            <cflocation  url="../cftask28/login.cfm?aMessages=#message#">  
+            <cfset local.message  ="Invalid username or password,please try again...">
+            <cflocation  url="../cftask28/login.cfm?aMessages=#local.message#">  
         </cfif>
     </cffunction>
 

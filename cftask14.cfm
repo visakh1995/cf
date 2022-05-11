@@ -17,7 +17,7 @@
                         </div>
                     </cfif>
                     <form name="cftask_1" method="post" enctype="multipart/form-data" 
-                    action="components/taskdefined.cfc?method=imageProcess">
+                        action="components/taskdefined.cfc?method=imageProcess">
                         <div class="form-control">
                             <input type="text" placeholder="Image Name"
                              name="name">

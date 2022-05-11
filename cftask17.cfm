@@ -14,7 +14,7 @@
                     <form name="myForm"  method="post" 
                         action="components/taskdefined.cfc?method=oddEvenFinding">
                         <div class="form-control">
-                        <input type="text" id = "enteredValue" 
+                            <input type="text" id = "enteredValue" 
                             placeholder="Please enter numeric value"
                             name="number" validate="numeric" message="Please enter numeric value"
                             onError="showErrorMessage">

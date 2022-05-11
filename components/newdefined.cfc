@@ -15,14 +15,14 @@
         </cfloop >
      <cfreturn mySentence>
     </cffunction> 
-    <cffunction name="sortedList">
-        <cfquery name="page" datasource="cruddb">
+    <cffunction name="sortedList" access="public" output="true">
+        <cfquery name="page">
             SELECT *FROM coldfusiion.words_table 
         </cfquery>
         <cfreturn page>
     </cffunction>
-    <cffunction name="sortedListFile">
-        <cfquery name="page" datasource="cruddb">
+    <cffunction name="sortedListFile" access="public" output="true">
+        <cfquery name="page">
             SELECT *FROM coldfusiion.read_count 
         </cfquery>
         <cfreturn page>

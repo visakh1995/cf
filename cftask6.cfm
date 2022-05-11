@@ -8,7 +8,7 @@
             <!--- <cfset structureFn = application.structureCall> --->
             <cfset newInstance = createObject("component","components.taskdefined")> 
             <cfset find = newInstance.structureDisplay(form.key,form.value)> 
-            <cfdump var = #structureFn#> 
+            <cfdump var = #find#> 
         </cfif>
 
         <section>
