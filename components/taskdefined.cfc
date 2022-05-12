@@ -564,15 +564,13 @@
 
     <cffunction name="structTextRetriever" access="remote" output="true">
         <cfargument  name="description" type="string" required="true">
-        <cfset mySentence = structNew()>
-        <cfset insertions =StructInsert(mySentence,"sentence","#arguments.description#")>
-        <cfset data = structKeyList(mySentence)>
-        <cfloop list= #data# index="i">
+        <cfset local.wordData=createObject("component", "tagCloud")>
+        <cfset local.structData=wordData.init(#arguments.description#)>
+        <cfset local.skeys=structKeyList(structData)>
+        <cfloop list= #skeys# index="i">
             <cfquery name = "insertWords" datasource="cruddb">
                 INSERT INTO coldfusiion.words_table(sentence)
-                VALUES(
-                <cfqueryparam value="#i#">
-                )
+                VALUES('#i#')
             </cfquery>
         </cfloop>
         <cflocation url="../cftask25/showPage.cfm?desc='#arguments.description#">

@@ -10,4 +10,30 @@
         <cfset application.structureCall = structureBase.structureDisplay> 
         <cfreturn true>
     </cffunction>
+
+
+<!--- onApplicationStart() - when first request made to appln --->
+<!--- onApplicationEnd() - when appln shuts down or timeout ends --->
+
+<!--- onSessionStart() - when new user request first page --->
+<!--- onSessionEnd - when new users session ends --->
+
+<!--- onRequestStart() - Just before a request is executed --->
+<!--- onRequest() - in place of the request --->
+<!--- onRequestEnds() - Just after the request is executed --->
+
+<!--- onError()- when an error occurs --->
+
+<!--- lifecycle methods --->
+
+<!--- onApplicationStart() --->
+<!--- onSessionStart() --->
+<!--- onRequestStart() --->
+<!--- onRequest() --->
+<!--- onRequestEnd() --->
+
+
 </cfcomponent>
+
+
+

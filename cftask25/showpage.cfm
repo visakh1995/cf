@@ -1,20 +1,12 @@
+<cfset newInstance = createObject("component","CF_TASK.components.newdefined")> 
+<cfset structData = newInstance.structTextRetriever(desc)>
+<cfset page = newInstance.sortedList()> 
 <html>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
     <body>  
-
-        <cfobject component ="CF_TASK.components.newdefined" name="redirectObject">
-        <cfinvoke component="#redirectObject#"
-            method="sortedList" returnVariable="page">
-        </cfinvoke>
-
-        <cfinvoke component="#redirectObject#"
-        method="structTextRetriever" returnVariable="structData">
-        <cfinvokeargument  name="description"  value="#desc#"> 
-        </cfinvoke>
-
         <cfoutput><br>
             <h5>Results - Alphabetical Order</h5><hr>
             <cfloop query="page">

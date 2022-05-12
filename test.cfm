@@ -192,3 +192,14 @@
                             </cfloop>
                         </table>
                     <div>
+
+
+<!---        <cfobject component ="CF_TASK.components.newdefined" name="redirectObject"> --->
+<!---         <cfinvoke component="#redirectObject#" --->
+<!---             method="sortedListFile" returnVariable="page"> --->
+<!---         </cfinvoke> --->
+    
+<!---         <cfinvoke component="#redirectObject#" --->
+<!---         method="structTextRetriever" returnVariable="structData"> --->
+<!---         <cfinvokeargument  name="description"  value="#desc#">  --->
+<!---         </cfinvoke> --->
