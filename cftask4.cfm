@@ -58,7 +58,7 @@
                                 <p class="col-blue"><b>       
                                     #DateFormat(i,"dd-mmm-yyyy -dddd")#
                                 </b></p>
-
+                                
                             <cfelseif DateFormat(i,"dddd") eq "Saturday">
                                 <p class="col-red"><b>
                                     #DateFormat(i,"dd-mmm-yyyy -dddd")#            
